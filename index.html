@@ -85,6 +85,29 @@
     #cartMsg { font-size: .85rem; color: #1b7a3a; margin: 10px 0 0; }
     #toast { position: fixed; top: 76px; max-width: 90%; text-align: center; left: 50%; transform: translateX(-50%); background: #1b7a3a; color: white;
              padding: 10px 18px; border-radius: 6px; z-index: 30; display: none; }
+
+    .shop #search { width: 100%; padding: 12px; font-size: 1rem; border: 1px solid #cfd8df; border-radius: 6px; margin: 4px 0 16px; box-sizing: border-box; }
+    .shop-grid { display: grid; grid-template-columns: 230px 1fr; gap: 24px; align-items: start; }
+    #cats { display: flex; flex-direction: column; gap: 4px; position: sticky; top: 70px; }
+    #cats button { text-align: left; padding: 10px 12px; border: 1px solid #cfd8df; background: white; border-radius: 6px; cursor: pointer; font-size: .95rem; color: #0b2a44; display: flex; justify-content: space-between; gap: 8px; }
+    #cats button.sel { background: #0b2a44; color: white; border-color: #0b2a44; }
+    #cats button span { opacity: .65; }
+    .item { display: flex; align-items: center; gap: 12px; padding: 12px 4px; border-bottom: 1px solid #e1e7ec; }
+    .item .nm { flex: 1; font-size: .95rem; color: #0b2a44; }
+    .item .pr { font-weight: bold; white-space: nowrap; min-width: 84px; text-align: right; }
+    .item .add { margin: 0; padding: 8px 12px; font-size: .9rem; white-space: nowrap; }
+    .item .add.q { background: white; color: #0b2a44; border: 2px solid #0b2a44; }
+    .more { display: block; margin: 16px auto 0; padding: 10px 22px; border: 2px solid #0b2a44; background: white; color: #0b2a44; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    .conf { background: #f4f7fa; border: 1px solid #cfd8df; border-radius: 8px; padding: 18px; margin-bottom: 18px; }
+    .conf h3 { margin: 0 0 10px; color: #0b2a44; }
+    .conf .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+    .conf label { font-size: .8rem; color: #4a5a68; display: block; }
+    .conf select { width: 100%; padding: 8px; font-size: 1rem; margin-top: 2px; }
+    .conf .tot { display: flex; align-items: center; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
+    .conf .big { margin: 0; }
+    .conf .hint { font-size: .85rem; color: #4a5a68; margin: 8px 0 0; }
+    .empty { padding: 20px 4px; color: #4a5a68; }
+    @media (max-width: 760px) { .shop-grid { grid-template-columns: 1fr; } #cats { position: static; flex-direction: row; overflow-x: auto; } #cats button { white-space: nowrap; } .item { flex-wrap: wrap; } }
     @media (max-width: 760px) { .finder-grid { grid-template-columns: 1fr; } }
     @media (max-width: 600px) { .hero h1 { font-size: 1.8rem; } }
   </style>
@@ -166,40 +189,19 @@
     </div>
   </section>
 
-  <section class="bloque" id="products">
-    <h2 data-en="Outboard Engine Brackets" data-es="Soportes para motores fuera de borda">Outboard Engine Brackets</h2>
-    <p class="intro" data-en="Marine-grade 5086 aluminum, powder coated. Several sizes and angles available." data-es="Aluminio marino 5086 con pintura en polvo. Varios tamaños y ángulos disponibles.">Marine-grade 5086 aluminum, powder coated. Several sizes and angles available.</p>
-    <div class="grid">
-      <div class="card"><h3 data-en="32&quot; Twin Engine Bracket (11°, 13° or 15°)" data-es="Soporte doble de 32&quot; (11°, 13° o 15°)">32" Twin Engine Bracket (11°, 13° or 15°)</h3><p data-en="White, off-white or black." data-es="Blanco, hueso o negro.">White, off-white or black.</p><p class="price">$5,140.00</p></div>
-      <div class="card"><h3 data-en="32&quot; Twin Bracket with 82&quot; Wide Platform" data-es="Soporte doble de 32&quot; con plataforma de 82&quot;">32" Twin Bracket with 82" Wide Platform</h3><p data-en="White, off-white or black." data-es="Blanco, hueso o negro.">White, off-white or black.</p><p class="price">$7,165.62</p></div>
+  <section class="bloque shop" id="products">
+    <h2 data-en="Products" data-es="Productos">Products</h2>
+    <p class="intro" data-en="Browse by category or search by name. Prices are from the current Stainless Marine site and may not be up to date." data-es="Explora por categoría o busca por nombre. Los precios son los del sitio actual de Stainless Marine y pueden no estar actualizados.">Browse by category or search by name. Prices are from the current Stainless Marine site and may not be up to date.</p>
+    <input id="search" type="search" placeholder="Search products..." aria-label="Search">
+    <div class="shop-grid">
+      <nav id="cats" aria-label="Categories"></nav>
+      <div id="shopMain">
+        <div id="configurator"></div>
+        <div id="list"></div>
+        <button class="more" id="more" type="button"></button>
+      </div>
     </div>
-  </section>
-
-  <section class="bloque">
-    <h2 data-en="Exhaust Manifolds Systems" data-es="Sistemas de múltiples de escape">Exhaust Manifolds Systems</h2>
-    <p class="intro" data-en="Fully water-cooled, with polished stainless risers, bolts, gaskets and fittings." data-es="Totalmente enfriados por agua, con risers de acero pulido, tornillos, empaques y conexiones.">Fully water-cooled, with polished stainless risers, bolts, gaskets and fittings.</p>
-    <div class="grid">
-      <div class="card"><h3 data-en="Big Block manifold, single (with fittings, bolts, gaskets and clamp)" data-es="Múltiple Big Block, individual (con conexiones, tornillos, empaques y abrazadera)">Big Block manifold, single (with fittings, bolts, gaskets and clamp)</h3><p class="price">$1,450.00</p></div>
-      <div class="card"><h3 data-en="Big Block set with standard stainless risers" data-es="Juego Big Block con risers estándar">Big Block set with standard stainless risers</h3><p class="price">$3,580.00</p></div>
-      <div class="card"><h3 data-en="Big Block set with 3&quot; taller risers" data-es="Juego Big Block con risers 3&quot; más altos">Big Block set with 3" taller risers</h3><p class="price">$4,000.00</p></div>
-      <div class="card"><h3 data-en="Big Block set with 6&quot; taller risers" data-es="Juego Big Block con risers 6&quot; más altos">Big Block set with 6" taller risers</h3><p class="price">$4,290.00</p></div>
-      <div class="card"><h3 data-en="Small Block manifold, single (with fittings, bolts, gaskets and clamp)" data-es="Múltiple Small Block, individual (con conexiones, tornillos, empaques y abrazadera)">Small Block manifold, single (with fittings, bolts, gaskets and clamp)</h3><p class="price">$985.00</p></div>
-      <div class="card"><h3 data-en="Small Block set with standard stainless risers" data-es="Juego Small Block con risers estándar">Small Block set with standard stainless risers</h3><p class="price">$3,090.00</p></div>
-      <div class="card"><h3 data-en="Small Block set with 3&quot; taller risers" data-es="Juego Small Block con risers 3&quot; más altos">Small Block set with 3" taller risers</h3><p class="price">$3,300.00</p></div>
-      <div class="card"><h3 data-en="Small Block set with 6&quot; taller risers" data-es="Juego Small Block con risers 6&quot; más altos">Small Block set with 6" taller risers</h3><p class="price">$3,600.00</p></div>
-    </div>
-  </section>
-
-  <section class="bloque">
-    <h2 data-en="Exhaust Tips &amp; Flaps" data-es="Puntas y válvulas de escape">Exhaust Tips &amp; Flaps</h2>
-    <p class="intro" data-en="316L stainless steel, available from 2&quot; to 8&quot; diameters." data-es="Acero inoxidable 316L, disponibles de 2&quot; a 8&quot; de diámetro.">316L stainless steel, available from 2" to 8" diameters.</p>
-    <div class="grid">
-      <div class="card"><h3 data-en="4&quot; External Flap, Salisbury style" data-es="Válvula externa de 4&quot;, estilo Salisbury">4" External Flap, Salisbury style</h3><p class="price">$33.50</p></div>
-      <div class="card"><h3 data-en="4&quot; Exhaust Tip, straight flange / straight end" data-es="Punta de escape 4&quot;, brida recta / extremo recto">4" Exhaust Tip, straight flange / straight end</h3><p class="price">$103.95</p></div>
-      <div class="card"><h3 data-en="4&quot; Exhaust Tip, straight flange / flush end" data-es="Punta de escape 4&quot;, brida recta / extremo a ras">4" Exhaust Tip, straight flange / flush end</h3><p class="price">$115.50</p></div>
-      <div class="card"><h3 data-en="4&quot; Exhaust Tip, 12° angled flange / straight end" data-es="Punta de escape 4&quot;, brida angulada 12° / extremo recto">4" Exhaust Tip, 12° angled flange / straight end</h3><p class="price">$115.80</p></div>
-    </div>
-    <p class="nota" data-en="Prices shown are for the concept demo and may not be current. Final pricing is confirmed with each quote." data-es="Los precios mostrados son para la demo conceptual y pueden no estar actualizados. El precio final se confirma con cada cotización.">Prices shown are for the concept demo and may not be current. Final pricing is confirmed with each quote.</p>
+    <p class="nota" data-en="Product names are shown in English. Final pricing is confirmed with each quote." data-es="Los nombres de producto se muestran en inglés. El precio final se confirma con cada cotización.">Product names are shown in English. Final pricing is confirmed with each quote.</p>
   </section>
 
   <section class="custom" id="custom">
@@ -226,6 +228,7 @@
   </aside>
   <div id="toast" role="status"></div>
 
+  <script src="catalog.js"></script>
   <script>
     var boton = document.getElementById('lang');
     var idioma = 'en';
@@ -242,6 +245,7 @@
       });
       boton.textContent = nuevo === 'en' ? 'Español' : 'English';
       renderFinder();
+      renderCatalog();
       renderCart();
     }
     boton.addEventListener('click', function () {
@@ -366,69 +370,170 @@
     });
     renderFinder();
 
-    // ---------- Shopping cart (demo: no real payments) ----------
+    // ---------- Catalog (data in catalog.js) ----------
     var CT = {
-      en: { empty: 'Your cart is empty.', add: 'Add to cart', added: 'Added to cart', remove: 'Remove',
-            sent: 'Demo only: in the real site this would send your list to the shop for a quote.' },
-      es: { empty: 'Tu carrito está vacío.', add: 'Agregar al carrito', added: 'Agregado al carrito', remove: 'Quitar',
-            sent: 'Solo demo: en el sitio real esto enviaría tu lista a la tienda para una cotización.' }
+      en: { empty: 'Your cart is empty.', add: 'Add to cart', quote: 'Ask for a quote', added: 'Added to cart', remove: 'Remove',
+            sent: 'Demo only: in the real site this would send your list to the shop for a quote.',
+            all: 'All', search: 'Search products...', more: 'Show more', none: 'No products found.', quoteTag: 'Quote',
+            cfg: 'Build your bracket', type: 'Type', mini: 'Mini', single: 'Single', twin: 'Twin', len: 'Length', plat: 'Platform',
+            noplat: 'No platform', platS: 'With 72" platform', platT: 'With 82" platform', deg: 'Angle', color: 'Color',
+            black: 'Black', off: 'Off-white', white: 'White', useFinder: 'Use my transom angle', finderNote: 'Not sure of the angle? Use the finder above.',
+            fixed12: 'This size is made in 12° only.', total: 'Price' },
+      es: { empty: 'Tu carrito está vacío.', add: 'Agregar al carrito', quote: 'Pedir cotización', added: 'Agregado al carrito', remove: 'Quitar',
+            sent: 'Solo demo: en el sitio real esto enviaría tu lista a la tienda para una cotización.',
+            all: 'Todo', search: 'Buscar productos...', more: 'Ver más', none: 'No se encontraron productos.', quoteTag: 'Cotizar',
+            cfg: 'Arma tu soporte', type: 'Tipo', mini: 'Mini', single: 'Individual', twin: 'Doble', len: 'Largo', plat: 'Plataforma',
+            noplat: 'Sin plataforma', platS: 'Con plataforma de 72"', platT: 'Con plataforma de 82"', deg: 'Ángulo', color: 'Color',
+            black: 'Negro', off: 'Hueso', white: 'Blanco', useFinder: 'Usar el ángulo de mi transom', finderNote: '¿No sabes el ángulo? Usa el buscador de arriba.',
+            fixed12: 'Esta medida se fabrica solo en 12°.', total: 'Precio' }
     };
-    var products = {};
+    var BR = {
+      mini:   { 7: [680], 9: [860], 12: [990] },
+      single: { 18: [1450, 2840], 23: [1600, 3160], 26: [1890, 3465], 30: [2340, 3845], 32: [2420, 4515], 36: [2840, 4980] },
+      twin:   { 18: [3310, 4830], 23: [3675, 4980], 26: [4180, 5520], 30: [4835, 6190], 32: [5140, 7165.62], 36: [5980, 7700] }
+    };
+    var EXTRA = [
+      { id: 'x-trip', c: 'br', n: '26"–30" Triple Bracket with Platform', p: 12000 },
+      { id: 'x-quad', c: 'br', n: '26"–30" Quad Bracket with Platform', p: 16000 },
+      { id: 'x-trip2', c: 'br', n: '12"–23" Triple Bracket with Platform (custom)', p: null },
+      { id: 'x-custom', c: 'br', n: 'Custom bracket (any size, angle or color)', p: null }
+    ];
+    var ALL = EXTRA.concat(ITEMS);
+    var money = function (n) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
     var cart = {};
     try { cart = JSON.parse(localStorage.getItem('sm-cart') || '{}') || {}; } catch (e) { cart = {}; }
-
-    function money(n) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    Object.keys(cart).forEach(function (k) { if (typeof cart[k] !== 'object') delete cart[k]; });
     function saveCart() { try { localStorage.setItem('sm-cart', JSON.stringify(cart)); } catch (e) {} }
 
-    // turn every product card into a product with an "Add to cart" button
-    document.querySelectorAll('.card').forEach(function (card, i) {
-      var priceEl = card.querySelector('.price');
-      var title = card.querySelector('h3');
-      if (!priceEl || !title) return;
-      var id = 'p' + i;
-      products[id] = {
-        en: title.getAttribute('data-en'),
-        es: title.getAttribute('data-es'),
-        price: parseFloat(priceEl.textContent.replace(/[$,]/g, ''))
-      };
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'add';
-      btn.setAttribute('data-en', CT.en.add);
-      btn.setAttribute('data-es', CT.es.add);
-      btn.textContent = CT[idioma].add;
-      btn.addEventListener('click', function () {
-        cart[id] = (cart[id] || 0) + 1;
-        saveCart();
-        renderCart();
-        showToast(CT[idioma].added + ': ' + products[id][idioma]);
+    var shop = { cat: 'all', q: '', limit: 40 };
+    var cfg = { type: 'twin', len: 32, plat: 0, deg: 13, color: 'black' };
+
+    function addToCart(id, en, es, price) {
+      if (!cart[id]) cart[id] = { q: 0, en: en, es: es, price: price };
+      cart[id].q += 1;
+      saveCart(); renderCart();
+      showToast(CT[idioma].added + ': ' + (idioma === 'es' ? es : en));
+    }
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+
+    function renderCats() {
+      var counts = { all: ALL.length };
+      ALL.forEach(function (it) { counts[it.c] = (counts[it.c] || 0) + 1; });
+      var h = '<button data-cat="all" class="' + (shop.cat === 'all' ? 'sel' : '') + '">' + CT[idioma].all + '<span>' + counts.all + '</span></button>';
+      CATS.forEach(function (c) {
+        if (!counts[c.k]) return;
+        h += '<button data-cat="' + c.k + '" class="' + (shop.cat === c.k ? 'sel' : '') + '">' + c[idioma] + '<span>' + counts[c.k] + '</span></button>';
       });
-      card.appendChild(btn);
+      document.getElementById('cats').innerHTML = h;
+    }
+
+    function cfgInfo() {
+      var t = cfg.type, tab = BR[t];
+      if (!tab[cfg.len]) cfg.len = Number(Object.keys(tab)[0]);
+      var row = tab[cfg.len], hasPlat = row.length > 1;
+      if (!hasPlat) cfg.plat = 0;
+      var fixed = t === 'mini' || cfg.len <= 23;
+      if (fixed) cfg.deg = 12; else if ([11, 13, 15].indexOf(cfg.deg) < 0) cfg.deg = 13;
+      var price = row[cfg.plat ? 1 : 0];
+      var L = CT[idioma];
+      var cname = { black: 'Black', off: 'Off-white', white: 'White' }[cfg.color];
+      var en = (t === 'mini' ? 'Mini' : t === 'single' ? 'Single' : 'Twin') + ' Engine Bracket ' + cfg.len + '"' +
+        (cfg.plat ? ' with ' + (t === 'twin' ? '82' : '72') + '" platform' : '') + ', ' + cfg.deg + '°, ' + cname;
+      var es = (t === 'mini' ? 'Soporte mini ' : t === 'single' ? 'Soporte individual ' : 'Soporte doble ') + cfg.len + '"' +
+        (cfg.plat ? ' con plataforma de ' + (t === 'twin' ? '82' : '72') + '"' : '') + ', ' + cfg.deg + '°, ' + L[cfg.color];
+      return { price: price, en: en, es: es, hasPlat: hasPlat, fixed: fixed, id: 'br-' + t + '-' + cfg.len + '-' + cfg.plat + '-' + cfg.deg + '-' + cfg.color };
+    }
+    function opt(v, label, cur) { return '<option value="' + v + '"' + (String(cur) === String(v) ? ' selected' : '') + '>' + label + '</option>'; }
+    function renderConfigurator() {
+      var box = document.getElementById('configurator');
+      if (!(shop.cat === 'br' || shop.cat === 'all') || shop.q) { box.innerHTML = ''; return; }
+      var L = CT[idioma], info = cfgInfo();
+      var lens = Object.keys(BR[cfg.type]).map(function (k) { return opt(k, k + '"', cfg.len); }).join('');
+      var degs = info.fixed ? opt(12, '12°', 12) : [11, 13, 15].map(function (d) { return opt(d, d + '°', cfg.deg); }).join('');
+      var platLbl = cfg.type === 'twin' ? L.platT : L.platS;
+      box.innerHTML = '<div class="conf"><h3>' + L.cfg + '</h3><div class="fields">' +
+        '<div><label>' + L.type + '</label><select id="cf-type">' + opt('mini', L.mini, cfg.type) + opt('single', L.single, cfg.type) + opt('twin', L.twin, cfg.type) + '</select></div>' +
+        '<div><label>' + L.len + '</label><select id="cf-len">' + lens + '</select></div>' +
+        '<div><label>' + L.plat + '</label><select id="cf-plat"' + (info.hasPlat ? '' : ' disabled') + '>' + opt(0, L.noplat, cfg.plat) + (info.hasPlat ? opt(1, platLbl, cfg.plat) : '') + '</select></div>' +
+        '<div><label>' + L.deg + '</label><select id="cf-deg"' + (info.fixed ? ' disabled' : '') + '>' + degs + '</select></div>' +
+        '<div><label>' + L.color + '</label><select id="cf-color">' + opt('black', L.black, cfg.color) + opt('off', L.off, cfg.color) + opt('white', L.white, cfg.color) + '</select></div>' +
+        '</div><div class="tot"><p class="big">' + money(info.price) + '</p>' +
+        '<button class="add" id="cf-add" type="button">' + L.add + '</button>' +
+        (info.fixed ? '' : '<button class="add q" id="cf-finder" type="button">' + L.useFinder + ' (' + fin.b + '°)</button>') + '</div>' +
+        '<p class="hint">' + (info.fixed ? L.fixed12 + ' ' : '') + L.finderNote + '</p></div>';
+    }
+
+    function renderCatalog() {
+      var L = CT[idioma];
+      document.getElementById('search').placeholder = L.search;
+      renderCats();
+      renderConfigurator();
+      var q = shop.q.trim().toLowerCase();
+      var list = ALL.filter(function (it) {
+        return (shop.cat === 'all' || it.c === shop.cat) && (!q || it.n.toLowerCase().indexOf(q) >= 0);
+      });
+      var shown = list.slice(0, shop.limit);
+      var h = shown.map(function (it) {
+        var nm = esc(it.n);
+        return '<div class="item"><div class="nm">' + nm + '</div>' +
+          '<div class="pr">' + (it.p == null ? L.quoteTag : money(it.p)) + '</div>' +
+          '<button class="add' + (it.p == null ? ' q' : '') + '" data-add="' + it.id + '" type="button">' + (it.p == null ? L.quote : L.add) + '</button></div>';
+      }).join('');
+      document.getElementById('list').innerHTML = h || '<p class="empty">' + L.none + '</p>';
+      var more = document.getElementById('more');
+      more.style.display = list.length > shown.length ? 'block' : 'none';
+      more.textContent = L.more + ' (' + (list.length - shown.length) + ')';
+    }
+
+    document.getElementById('cats').addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      shop.cat = b.getAttribute('data-cat'); shop.limit = 40; renderCatalog();
+    });
+    document.getElementById('search').addEventListener('input', function (e) { shop.q = e.target.value; shop.limit = 40; renderCatalog(); });
+    document.getElementById('more').addEventListener('click', function () { shop.limit += 60; renderCatalog(); });
+    document.getElementById('list').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-add]'); if (!b) return;
+      var id = b.getAttribute('data-add');
+      var it = ALL.filter(function (x) { return x.id === id; })[0];
+      if (it) addToCart(it.id, it.n, it.n, it.p);
+    });
+    document.getElementById('configurator').addEventListener('change', function (e) {
+      var id = e.target.id;
+      if (id === 'cf-type') { cfg.type = e.target.value; cfg.plat = 0; }
+      if (id === 'cf-len') cfg.len = Number(e.target.value);
+      if (id === 'cf-plat') cfg.plat = Number(e.target.value);
+      if (id === 'cf-deg') cfg.deg = Number(e.target.value);
+      if (id === 'cf-color') cfg.color = e.target.value;
+      renderConfigurator();
+    });
+    document.getElementById('configurator').addEventListener('click', function (e) {
+      if (e.target.id === 'cf-add') { var i = cfgInfo(); addToCart(i.id, i.en, i.es, i.price); }
+      if (e.target.id === 'cf-finder') { cfg.deg = fin.b; renderConfigurator(); }
     });
 
     var toastTimer;
     function showToast(msg) {
       var el = document.getElementById('toast');
-      el.textContent = msg;
-      el.style.display = 'block';
+      el.textContent = msg; el.style.display = 'block';
       clearTimeout(toastTimer);
       toastTimer = setTimeout(function () { el.style.display = 'none'; }, 2000);
     }
 
     function renderCart() {
-      var ids = Object.keys(cart).filter(function (id) { return products[id] && cart[id] > 0; });
-      var html = '', total = 0, count = 0;
+      var ids = Object.keys(cart).filter(function (id) { return cart[id].q > 0; });
+      var html = '', total = 0, count = 0, hasQuote = false;
       ids.forEach(function (id) {
-        var p = products[id], q = cart[id];
-        total += p.price * q; count += q;
-        html += '<div class="line"><div class="nm">' + p[idioma] + '</div>' +
+        var p = cart[id], q = p.q;
+        count += q;
+        if (p.price == null) hasQuote = true; else total += p.price * q;
+        html += '<div class="line"><div class="nm">' + esc(idioma === 'es' ? p.es : p.en) + '</div>' +
           '<div class="row"><div class="qty"><button data-act="minus" data-id="' + id + '" aria-label="-">−</button>' +
           '<span>' + q + '</span><button data-act="plus" data-id="' + id + '" aria-label="+">+</button></div>' +
-          '<strong>' + money(p.price * q) + '</strong></div>' +
+          '<strong>' + (p.price == null ? CT[idioma].quoteTag : money(p.price * q)) + '</strong></div>' +
           '<button class="rm" data-act="rm" data-id="' + id + '">' + CT[idioma].remove + '</button></div>';
       });
       document.getElementById('cartItems').innerHTML = html || '<p>' + CT[idioma].empty + '</p>';
-      document.getElementById('cartSum').textContent = money(total);
+      document.getElementById('cartSum').textContent = money(total) + (hasQuote ? ' +' : '');
       document.getElementById('cartCount').textContent = count;
       document.getElementById('sendQuote').disabled = count === 0;
     }
@@ -440,16 +545,16 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') openCart(false); });
     document.getElementById('cartItems').addEventListener('click', function (e) {
       var act = e.target.getAttribute('data-act'), id = e.target.getAttribute('data-id');
-      if (!act || !id) return;
-      if (act === 'plus') cart[id] += 1;
-      if (act === 'minus') cart[id] -= 1;
-      if (act === 'rm' || cart[id] <= 0) delete cart[id];
-      saveCart();
-      renderCart();
+      if (!act || !id || !cart[id]) return;
+      if (act === 'plus') cart[id].q += 1;
+      if (act === 'minus') cart[id].q -= 1;
+      if (act === 'rm' || cart[id].q <= 0) delete cart[id];
+      saveCart(); renderCart();
     });
     document.getElementById('sendQuote').addEventListener('click', function () {
       document.getElementById('cartMsg').textContent = CT[idioma].sent;
     });
+    renderCatalog();
     renderCart();
   </script>
 </body>
