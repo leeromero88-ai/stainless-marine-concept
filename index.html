@@ -4,58 +4,109 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stainless Marine | American-Made Stainless Steel Marine Parts</title>
+  <meta name="description" content="American-made stainless steel marine parts: outboard engine brackets, exhaust manifolds, exhaust tips and battery boxes. Over 30 years of experience.">
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; color: #1a2530; }
-    header { background: #0b2a44; color: white; padding: 16px 24px;
-             display: flex; justify-content: space-between; align-items: center; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; color: #1a2530; line-height: 1.5; }
+    a { color: inherit; }
+    header { background: #0b2a44; color: white; padding: 14px 24px; display: flex;
+             flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center;
+             position: sticky; top: 0; z-index: 10; }
+    header nav { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+    header nav a { text-decoration: none; }
+    header nav a:hover { text-decoration: underline; }
     #lang { background: transparent; color: white; border: 1px solid white;
             padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 1rem; }
-    .hero { padding: 64px 24px; text-align: center; background: #e8eef3; }
-    .hero h1 { font-size: 2.2rem; margin: 0 0 12px; }
-    .boton { display: inline-block; margin-top: 20px; padding: 14px 28px;
-             background: #0b2a44; color: white; text-decoration: none; border-radius: 6px; }
-    .productos { padding: 48px 24px; max-width: 1000px; margin: 0 auto; }
-    .productos h2 { text-align: center; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-    .card { border: 1px solid #cfd8df; border-radius: 8px; padding: 20px; }
-    .card h3 { margin-top: 0; color: #0b2a44; }
-    footer { background: #0b2a44; color: white; text-align: center; padding: 20px; font-size: 0.9rem; }
+    .hero { padding: 72px 24px; text-align: center; background: #e8eef3; }
+    .hero h1 { font-size: 2.3rem; margin: 0 0 12px; }
+    .hero p { max-width: 640px; margin: 0 auto; font-size: 1.1rem; }
+    .boton { display: inline-block; margin-top: 22px; padding: 14px 28px;
+             background: #0b2a44; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; }
+    .boton:hover { background: #12456f; }
+    .trust { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;
+             max-width: 1000px; margin: -28px auto 0; padding: 0 24px; position: relative; }
+    .trust div { background: white; border: 1px solid #cfd8df; border-radius: 8px; padding: 16px;
+                 text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,.06); }
+    .trust strong { display: block; color: #0b2a44; font-size: 1.1rem; }
+    section.bloque { padding: 48px 24px; max-width: 1000px; margin: 0 auto; }
+    section.bloque h2 { color: #0b2a44; border-bottom: 3px solid #0b2a44; padding-bottom: 8px; }
+    .intro { color: #4a5a68; margin-top: -6px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+    .card { border: 1px solid #cfd8df; border-radius: 8px; padding: 18px; display: flex;
+            flex-direction: column; justify-content: space-between; }
+    .card h3 { margin: 0 0 8px; font-size: 1.02rem; color: #0b2a44; }
+    .price { font-size: 1.35rem; font-weight: bold; margin: 10px 0 0; }
+    .nota { font-size: .85rem; color: #4a5a68; margin-top: 18px; }
+    .custom { background: #0b2a44; color: white; text-align: center; padding: 56px 24px; }
+    .custom .boton { background: white; color: #0b2a44; }
+    footer { background: #08202f; color: white; text-align: center; padding: 22px; font-size: .9rem; }
+    @media (max-width: 600px) { .hero h1 { font-size: 1.8rem; } }
   </style>
 </head>
 <body>
   <header>
     <strong>STAINLESS MARINE</strong>
-    <button id="lang">Español</button>
+    <nav>
+      <a href="#products" data-en="Products" data-es="Productos">Products</a>
+      <a href="#custom" data-en="Custom orders" data-es="Pedidos personalizados">Custom orders</a>
+      <button id="lang">Español</button>
+    </nav>
   </header>
 
   <section class="hero">
     <h1 data-en="American-made stainless steel marine parts"
         data-es="Piezas marinas en acero inoxidable hechas en EE. UU.">American-made stainless steel marine parts</h1>
-    <p data-en="Brackets, exhaust manifolds, battery boxes and more. Over 30 years of experience."
-       data-es="Soportes, múltiples de escape, cajas de batería y más. Más de 30 años de experiencia.">Brackets, exhaust manifolds, battery boxes and more. Over 30 years of experience.</p>
-    <a class="boton" href="#" data-en="Request a quote" data-es="Pedir cotización">Request a quote</a>
+    <p data-en="Outboard brackets, exhaust manifolds, exhaust tips, battery boxes and more. Built by hand, with over 30 years of experience."
+       data-es="Soportes para fuera de borda, múltiples de escape, puntas de escape, cajas de batería y más. Fabricados a mano, con más de 30 años de experiencia.">Outboard brackets, exhaust manifolds, exhaust tips, battery boxes and more. Built by hand, with over 30 years of experience.</p>
+    <a class="boton" href="#custom" data-en="Request a quote" data-es="Pedir cotización">Request a quote</a>
   </section>
 
-  <section class="productos">
-    <h2 data-en="Our products" data-es="Nuestros productos">Our products</h2>
+  <div class="trust">
+    <div><strong data-en="Made in USA" data-es="Hecho en EE. UU.">Made in USA</strong><span data-en="316L stainless and 5086 marine aluminum" data-es="Acero 316L y aluminio marino 5086">316L stainless and 5086 marine aluminum</span></div>
+    <div><strong data-en="30+ years" data-es="30+ años">30+ years</strong><span data-en="Building outboard transom brackets" data-es="Fabricando soportes de transom">Building outboard transom brackets</span></div>
+    <div><strong data-en="10-year warranty" data-es="Garantía de 10 años">10-year warranty</strong><span data-en="Structural (3 years on powder coat)" data-es="Estructural (3 años en la pintura)">Structural (3 years on powder coat)</span></div>
+  </div>
+
+  <section class="bloque" id="products">
+    <h2 data-en="Outboard Engine Brackets" data-es="Soportes para motores fuera de borda">Outboard Engine Brackets</h2>
+    <p class="intro" data-en="Marine-grade 5086 aluminum, powder coated. Several sizes and angles available." data-es="Aluminio marino 5086 con pintura en polvo. Varios tamaños y ángulos disponibles.">Marine-grade 5086 aluminum, powder coated. Several sizes and angles available.</p>
     <div class="grid">
-      <div class="card">
-        <h3 data-en="Outboard Engine Brackets" data-es="Soportes para motores fuera de borda">Outboard Engine Brackets</h3>
-        <p data-en="Marine-grade aluminum, powder coated." data-es="Aluminio de grado marino con pintura en polvo.">Marine-grade aluminum, powder coated.</p>
-      </div>
-      <div class="card">
-        <h3 data-en="Exhaust Manifolds" data-es="Múltiples de escape">Exhaust Manifolds</h3>
-        <p data-en="Water-cooled, with polished stainless risers." data-es="Enfriados por agua, con risers de acero pulido.">Water-cooled, with polished stainless risers.</p>
-      </div>
-      <div class="card">
-        <h3 data-en="Battery Boxes" data-es="Cajas de batería">Battery Boxes</h3>
-        <p data-en="Self-contained stainless boxes with cover." data-es="Cajas de acero inoxidable con tapa.">Self-contained stainless boxes with cover.</p>
-      </div>
-      <div class="card">
-        <h3 data-en="Exhaust Tips" data-es="Puntas de escape">Exhaust Tips</h3>
-        <p data-en="316L stainless steel in many sizes." data-es="Acero inoxidable 316L en varios tamaños.">316L stainless steel in many sizes.</p>
-      </div>
+      <div class="card"><h3 data-en="32&quot; Twin Engine Bracket (11°, 13° or 15°)" data-es="Soporte doble de 32&quot; (11°, 13° o 15°)">32" Twin Engine Bracket (11°, 13° or 15°)</h3><p data-en="White, off-white or black." data-es="Blanco, hueso o negro.">White, off-white or black.</p><p class="price">$5,140.00</p></div>
+      <div class="card"><h3 data-en="32&quot; Twin Bracket with 82&quot; Wide Platform" data-es="Soporte doble de 32&quot; con plataforma de 82&quot;">32" Twin Bracket with 82" Wide Platform</h3><p data-en="White, off-white or black." data-es="Blanco, hueso o negro.">White, off-white or black.</p><p class="price">$7,165.62</p></div>
     </div>
+  </section>
+
+  <section class="bloque">
+    <h2 data-en="Exhaust Manifolds Systems" data-es="Sistemas de múltiples de escape">Exhaust Manifolds Systems</h2>
+    <p class="intro" data-en="Fully water-cooled, with polished stainless risers, bolts, gaskets and fittings." data-es="Totalmente enfriados por agua, con risers de acero pulido, tornillos, empaques y conexiones.">Fully water-cooled, with polished stainless risers, bolts, gaskets and fittings.</p>
+    <div class="grid">
+      <div class="card"><h3 data-en="Big Block manifold, single (with fittings, bolts, gaskets and clamp)" data-es="Múltiple Big Block, individual (con conexiones, tornillos, empaques y abrazadera)">Big Block manifold, single (with fittings, bolts, gaskets and clamp)</h3><p class="price">$1,450.00</p></div>
+      <div class="card"><h3 data-en="Big Block set with standard stainless risers" data-es="Juego Big Block con risers estándar">Big Block set with standard stainless risers</h3><p class="price">$3,580.00</p></div>
+      <div class="card"><h3 data-en="Big Block set with 3&quot; taller risers" data-es="Juego Big Block con risers 3&quot; más altos">Big Block set with 3" taller risers</h3><p class="price">$4,000.00</p></div>
+      <div class="card"><h3 data-en="Big Block set with 6&quot; taller risers" data-es="Juego Big Block con risers 6&quot; más altos">Big Block set with 6" taller risers</h3><p class="price">$4,290.00</p></div>
+      <div class="card"><h3 data-en="Small Block manifold, single (with fittings, bolts, gaskets and clamp)" data-es="Múltiple Small Block, individual (con conexiones, tornillos, empaques y abrazadera)">Small Block manifold, single (with fittings, bolts, gaskets and clamp)</h3><p class="price">$985.00</p></div>
+      <div class="card"><h3 data-en="Small Block set with standard stainless risers" data-es="Juego Small Block con risers estándar">Small Block set with standard stainless risers</h3><p class="price">$3,090.00</p></div>
+      <div class="card"><h3 data-en="Small Block set with 3&quot; taller risers" data-es="Juego Small Block con risers 3&quot; más altos">Small Block set with 3" taller risers</h3><p class="price">$3,300.00</p></div>
+      <div class="card"><h3 data-en="Small Block set with 6&quot; taller risers" data-es="Juego Small Block con risers 6&quot; más altos">Small Block set with 6" taller risers</h3><p class="price">$3,600.00</p></div>
+    </div>
+  </section>
+
+  <section class="bloque">
+    <h2 data-en="Exhaust Tips &amp; Flaps" data-es="Puntas y válvulas de escape">Exhaust Tips &amp; Flaps</h2>
+    <p class="intro" data-en="316L stainless steel, available from 2&quot; to 8&quot; diameters." data-es="Acero inoxidable 316L, disponibles de 2&quot; a 8&quot; de diámetro.">316L stainless steel, available from 2" to 8" diameters.</p>
+    <div class="grid">
+      <div class="card"><h3 data-en="4&quot; External Flap, Salisbury style" data-es="Válvula externa de 4&quot;, estilo Salisbury">4" External Flap, Salisbury style</h3><p class="price">$33.50</p></div>
+      <div class="card"><h3 data-en="4&quot; Exhaust Tip, straight flange / straight end" data-es="Punta de escape 4&quot;, brida recta / extremo recto">4" Exhaust Tip, straight flange / straight end</h3><p class="price">$103.95</p></div>
+      <div class="card"><h3 data-en="4&quot; Exhaust Tip, straight flange / flush end" data-es="Punta de escape 4&quot;, brida recta / extremo a ras">4" Exhaust Tip, straight flange / flush end</h3><p class="price">$115.50</p></div>
+      <div class="card"><h3 data-en="4&quot; Exhaust Tip, 12° angled flange / straight end" data-es="Punta de escape 4&quot;, brida angulada 12° / extremo recto">4" Exhaust Tip, 12° angled flange / straight end</h3><p class="price">$115.80</p></div>
+    </div>
+    <p class="nota" data-en="Prices shown are for the concept demo and may not be current. Final pricing is confirmed with each quote." data-es="Los precios mostrados son para la demo conceptual y pueden no estar actualizados. El precio final se confirma con cada cotización.">Prices shown are for the concept demo and may not be current. Final pricing is confirmed with each quote.</p>
+  </section>
+
+  <section class="custom" id="custom">
+    <h2 data-en="Need something custom?" data-es="¿Necesitas algo a la medida?">Need something custom?</h2>
+    <p data-en="Tell us your boat and engine setup and we will build the right bracket or exhaust system for it." data-es="Cuéntanos tu bote y la configuración de tus motores y fabricamos el soporte o sistema de escape ideal.">Tell us your boat and engine setup and we will build the right bracket or exhaust system for it.</p>
+    <a class="boton" href="#" data-en="Request a quote" data-es="Pedir cotización">Request a quote</a>
   </section>
 
   <footer data-en="Concept demo for learning purposes. Not affiliated with Stainless Marine."
