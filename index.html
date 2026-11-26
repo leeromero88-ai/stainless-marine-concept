@@ -40,6 +40,26 @@
     .custom { background: #0b2a44; color: white; text-align: center; padding: 56px 24px; }
     .custom .boton { background: white; color: #0b2a44; }
     footer { background: #08202f; color: white; text-align: center; padding: 22px; font-size: .9rem; }
+    .finder { background: #f4f7fa; }
+    .finder .inner { max-width: 1000px; margin: 0 auto; padding: 56px 24px; }
+    .finder h2 { color: #0b2a44; border-bottom: 3px solid #0b2a44; padding-bottom: 8px; margin-top: 0; }
+    .finder-grid { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(300px, 1.5fr); gap: 24px; align-items: start; }
+    .panel { background: white; border: 1px solid #cfd8df; border-radius: 8px; padding: 18px; }
+    .panel input[type=range] { width: 100%; }
+    .big { font-size: 2rem; font-weight: bold; color: #0b2a44; }
+    .opts { display: flex; gap: 8px; margin: 8px 0 4px; }
+    .opt { flex: 1; padding: 12px 0; font-size: 1.05rem; border: 2px solid #cfd8df; background: white;
+           border-radius: 6px; cursor: pointer; font-weight: bold; color: #0b2a44; }
+    .opt.sel { background: #0b2a44; color: white; border-color: #0b2a44; }
+    .result { margin: 14px 0 4px; font-weight: bold; }
+    #status.ok { color: #1b7a3a; }
+    #status.warn { color: #a35a00; }
+    #gap { width: 90px; padding: 6px; font-size: 1rem; }
+    details { margin-top: 12px; }
+    summary { cursor: pointer; font-weight: bold; color: #0b2a44; }
+    details ol, details p { margin: 8px 0 8px 0; }
+    #diagram { width: 100%; height: auto; background: white; border: 1px solid #cfd8df; border-radius: 8px; }
+    @media (max-width: 760px) { .finder-grid { grid-template-columns: 1fr; } }
     @media (max-width: 600px) { .hero h1 { font-size: 1.8rem; } }
   </style>
 </head>
@@ -66,6 +86,58 @@
     <div><strong data-en="30+ years" data-es="30+ años">30+ years</strong><span data-en="Building outboard transom brackets" data-es="Fabricando soportes de transom">Building outboard transom brackets</span></div>
     <div><strong data-en="10-year warranty" data-es="Garantía de 10 años">10-year warranty</strong><span data-en="Structural (3 years on powder coat)" data-es="Estructural (3 años en la pintura)">Structural (3 years on powder coat)</span></div>
   </div>
+
+  <section class="finder" id="finder">
+    <div class="inner">
+      <h2 data-en="Find the right bracket for your boat" data-es="Encuentra el bracket correcto para tu bote">Find the right bracket for your boat</h2>
+      <p class="intro" data-en="Your transom angle decides which bracket you need. Move the slider and watch how the engine hangs." data-es="El ángulo de tu transom decide qué bracket necesitas. Mueve el control y mira cómo queda el motor.">Your transom angle decides which bracket you need. Move the slider and watch how the engine hangs.</p>
+
+      <div class="finder-grid">
+        <div class="panel">
+          <strong data-en="1. Your transom angle" data-es="1. El ángulo de tu transom">1. Your transom angle</strong>
+          <div><span class="big" id="angleVal">13.0°</span></div>
+          <input type="range" id="angle" min="8" max="18" step="0.5" value="13" aria-label="Transom angle in degrees">
+
+          <details>
+            <summary data-en="Don't know it? Measure it in 2 minutes" data-es="¿No lo sabes? Mídelo en 2 minutos">Don't know it? Measure it in 2 minutes</summary>
+            <ol>
+              <li data-en="Hang a string with a small weight (a plumb line), exactly 12 inches long, from the top of the transom." data-es="Cuelga un hilo con un peso pequeño (una plomada), de exactamente 12 pulgadas, desde la parte alta del transom.">Hang a string with a small weight (a plumb line), exactly 12 inches long, from the top of the transom.</li>
+              <li data-en="Wait until it hangs still, then measure the gap between the bottom of the string and the transom." data-es="Espera a que quede quieto y mide la distancia entre el extremo del hilo y el transom.">Wait until it hangs still, then measure the gap between the bottom of the string and the transom.</li>
+              <li data-en="Type the gap in inches:" data-es="Escribe esa distancia en pulgadas:">Type the gap in inches:</li>
+            </ol>
+            <input type="number" id="gap" min="1" max="4" step="0.1" placeholder="2.8" aria-label="Gap in inches"> <span id="gapOut"></span>
+          </details>
+
+          <p style="margin-top:18px"><strong data-en="2. Try a bracket" data-es="2. Prueba un bracket">2. Try a bracket</strong></p>
+          <div class="opts">
+            <button type="button" class="opt" data-b="11">11°</button>
+            <button type="button" class="opt" data-b="13">13°</button>
+            <button type="button" class="opt" data-b="15">15°</button>
+          </div>
+
+          <p class="result" id="rec"></p>
+          <p id="status"></p>
+          <a class="boton" href="#products" data-en="See matching brackets" data-es="Ver brackets compatibles">See matching brackets</a>
+        </div>
+
+        <div>
+          <svg id="diagram" viewBox="0 0 520 340" role="img" aria-label="Side view of a boat transom, bracket and outboard engine"><g id="scene"></g></svg>
+          <p class="nota" data-en="Illustration, not to scale. Always confirm your measurements with us before ordering." data-es="Ilustración, no está a escala. Confirma siempre tus medidas con nosotros antes de ordenar.">Illustration, not to scale. Always confirm your measurements with us before ordering.</p>
+        </div>
+      </div>
+
+      <details>
+        <summary data-en="New to boating? What is a transom angle?" data-es="¿Eres principiante? ¿Qué es el ángulo del transom?">New to boating? What is a transom angle?</summary>
+        <p data-en="The transom is the flat wall at the back of the boat where the engine is mounted. It is not perfectly vertical: it leans back, usually between 12° and 15°. An outboard bracket moves the engine back, behind the boat. Its degree rating is made to match the transom so the engine hangs straight."
+           data-es="El transom es la pared plana en la parte trasera del bote, donde se monta el motor. No es perfectamente vertical: se inclina hacia atrás, normalmente entre 12° y 15°. Un bracket para fuera de borda mueve el motor hacia atrás, fuera del bote. Su grado está hecho para coincidir con el transom y que el motor cuelgue derecho.">The transom is the flat wall at the back of the boat where the engine is mounted. It is not perfectly vertical: it leans back, usually between 12° and 15°. An outboard bracket moves the engine back, behind the boat. Its degree rating is made to match the transom so the engine hangs straight.</p>
+      </details>
+      <details>
+        <summary data-en="Enthusiast notes" data-es="Notas para entusiastas">Enthusiast notes</summary>
+        <p data-en="A bracket that does not match the transom leaves the engine tilted from the start, which changes how much trim range you have in each direction. Take the reading in more than one spot and compare. If your numbers differ, or you are outside 11°–15°, tell us when you request a quote and we can build a custom bracket."
+           data-es="Un bracket que no coincide con el transom deja el motor inclinado desde el inicio, lo que cambia cuánto rango de trim tienes en cada dirección. Toma la medida en más de un punto y compáralas. Si tus números son distintos, o estás fuera de 11°–15°, avísanos al pedir tu cotización y podemos fabricar un bracket a la medida.">A bracket that does not match the transom leaves the engine tilted from the start, which changes how much trim range you have in each direction. Take the reading in more than one spot and compare. If your numbers differ, or you are outside 11°–15°, tell us when you request a quote and we can build a custom bracket.</p>
+      </details>
+    </div>
+  </section>
 
   <section class="bloque" id="products">
     <h2 data-en="Outboard Engine Brackets" data-es="Soportes para motores fuera de borda">Outboard Engine Brackets</h2>
@@ -127,10 +199,129 @@
         el.textContent = el.getAttribute('data-' + nuevo);
       });
       boton.textContent = nuevo === 'en' ? 'Español' : 'English';
+      renderFinder();
     }
     boton.addEventListener('click', function () {
       cambiarIdioma(idioma === 'en' ? 'es' : 'en');
     });
+
+    // ---------- Bracket finder ----------
+    var T = {
+      en: {
+        hull: 'Hull', bracket: 'Bracket', motor: 'Outboard', vertical: 'Vertical',
+        rec: function (a, r) { return 'Your transom is ' + a.toFixed(1) + '°. Recommended standard bracket: ' + r + '°.'; },
+        ok: '✓ The motor mounting face sits plumb (vertical).',
+        off: function (d, dir) {
+          return '⚠ With this bracket the motor starts ' + d.toFixed(1) + '° off vertical (' +
+            (dir > 0 ? 'top leaning aft' : 'top leaning forward') + '). That changes how it trims.';
+        },
+        custom: ' Your angle is more than 1° from a standard size: ask us for a custom bracket.',
+        gapOut: function (a) { return '≈ ' + a.toFixed(1) + '° (applied to the slider)'; },
+        gapBad: 'Enter a gap between 1 and 4 inches.'
+      },
+      es: {
+        hull: 'Casco', bracket: 'Bracket', motor: 'Motor', vertical: 'Vertical',
+        rec: function (a, r) { return 'Tu transom mide ' + a.toFixed(1) + '°. Bracket estándar recomendado: ' + r + '°.'; },
+        ok: '✓ La cara de montaje del motor queda a plomo (vertical).',
+        off: function (d, dir) {
+          return '⚠ Con este bracket el motor empieza ' + d.toFixed(1) + '° fuera de la vertical (' +
+            (dir > 0 ? 'la parte alta inclinada hacia atrás' : 'la parte alta inclinada hacia adelante') + '). Eso cambia cómo hace trim.';
+        },
+        custom: ' Tu ángulo está a más de 1° de un tamaño estándar: pídenos un bracket a la medida.',
+        gapOut: function (a) { return '≈ ' + a.toFixed(1) + '° (aplicado al control)'; },
+        gapBad: 'Escribe una distancia entre 1 y 4 pulgadas.'
+      }
+    };
+    var STANDARD = [11, 13, 15];
+    var fin = { a: 13, b: 13 };
+    var slider = document.getElementById('angle');
+    var gapInput = document.getElementById('gap');
+
+    function nearest(a) {
+      var best = STANDARD[0];
+      STANDARD.forEach(function (s) { if (Math.abs(s - a) < Math.abs(best - a)) best = s; });
+      return best;
+    }
+
+    function renderFinder() {
+      var t = T[idioma];
+      var a = fin.a, b = fin.b;
+      var rad = Math.PI / 180;
+      var tanA = Math.tan(a * rad);
+      var phi = a - b;                       // degrees the engine face is off vertical
+      var tanP = Math.tan(phi * rad);
+      var Bx = 240, By = 230, y1 = 115, y2 = 215;
+      function xT(y) { return Bx + (By - y) * tanA; }   // x of the transom at height y
+      var xr = xT(y1) + 36;                  // rear (engine) face at the top of the bracket
+      var xrb = xr - (y2 - y1) * tanP;       // rear face at the bottom of the bracket
+      var Tx = xT(100);
+
+      var s = '';
+      // legend
+      s += '<rect x="20" y="12" width="12" height="12" fill="#dfe7ee" stroke="#0b2a44"/><text x="38" y="23" font-size="13" fill="#1a2530">' + t.hull + '</text>';
+      s += '<rect x="110" y="12" width="12" height="12" fill="#f0a030" stroke="#7a4a00"/><text x="128" y="23" font-size="13" fill="#1a2530">' + t.bracket + '</text>';
+      s += '<rect x="215" y="12" width="12" height="12" fill="#3c4f60" stroke="#1a2530"/><text x="233" y="23" font-size="13" fill="#1a2530">' + t.motor + '</text>';
+      // hull
+      s += '<polygon points="20,230 20,135 ' + Tx + ',100 ' + Bx + ',' + By + '" fill="#dfe7ee" stroke="#0b2a44" stroke-width="3"/>';
+      // bracket
+      s += '<polygon points="' + xT(y1) + ',' + y1 + ' ' + xr + ',' + y1 + ' ' + xrb + ',' + y2 + ' ' + xT(y2) + ',' + y2 + '" fill="#f0a030" stroke="#7a4a00" stroke-width="2"/>';
+      // outboard, hung on the rear face and rotated by how far that face is from vertical
+      s += '<g transform="rotate(' + phi + ' ' + xr + ' ' + y1 + ')" fill="#3c4f60" stroke="#1a2530" stroke-width="1.5">' +
+           '<rect x="' + (xr - 4) + '" y="' + y1 + '" width="6" height="72" fill="#1a2530"/>' +
+           '<rect x="' + xr + '" y="' + (y1 - 42) + '" width="74" height="48" rx="12"/>' +
+           '<rect x="' + xr + '" y="' + (y1 + 6) + '" width="52" height="70"/>' +
+           '<rect x="' + (xr + 6) + '" y="' + (y1 + 76) + '" width="34" height="84"/>' +
+           '<ellipse cx="' + (xr + 22) + '" cy="' + (y1 + 168) + '" rx="30" ry="12"/>' +
+           '<rect x="' + (xr + 48) + '" y="' + (y1 + 150) + '" width="6" height="40" rx="3"/>' +
+           '</g>';
+      // water
+      s += '<rect x="0" y="215" width="520" height="125" fill="#2a8fd0" opacity="0.28"/>';
+      s += '<line x1="0" y1="215" x2="520" y2="215" stroke="#2a8fd0" stroke-width="2"/>';
+      // reference vertical and angle
+      s += '<line x1="' + Bx + '" y1="' + By + '" x2="' + Bx + '" y2="55" stroke="#777" stroke-dasharray="5 4"/>';
+      s += '<text x="' + (Bx + 8) + '" y="72" font-size="15" font-weight="bold" fill="#0b2a44">' + a.toFixed(1) + '°</text>';
+      s += '<text x="' + (Bx - 4) + '" y="50" font-size="12" text-anchor="middle" fill="#555">' + t.vertical + '</text>';
+      document.getElementById('scene').innerHTML = s;
+
+      var rec = nearest(a);
+      var custom = Math.abs(rec - a) > 1;
+      var d = Math.abs(phi);
+      document.getElementById('angleVal').textContent = a.toFixed(1) + '°';
+      document.getElementById('rec').textContent = t.rec(a, rec) + (custom ? t.custom : '');
+      var st = document.getElementById('status');
+      if (d < 0.05) { st.textContent = t.ok; st.className = 'ok'; }
+      else { st.textContent = t.off(d, phi); st.className = 'warn'; }
+      document.querySelectorAll('.opt').forEach(function (btn) {
+        var on = Number(btn.getAttribute('data-b')) === b;
+        btn.className = on ? 'opt sel' : 'opt';
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+
+    slider.addEventListener('input', function () {
+      fin.a = Number(slider.value);
+      fin.b = nearest(fin.a);
+      renderFinder();
+    });
+    document.querySelectorAll('.opt').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        fin.b = Number(btn.getAttribute('data-b'));
+        renderFinder();
+      });
+    });
+    gapInput.addEventListener('input', function () {
+      var gap = parseFloat(gapInput.value);
+      var out = document.getElementById('gapOut');
+      if (!(gap >= 1 && gap <= 4)) { out.textContent = T[idioma].gapBad; return; }
+      var deg = Math.asin(gap / 12) * 180 / Math.PI;   // 12-inch plumb line
+      deg = Math.min(18, Math.max(8, Math.round(deg * 2) / 2));
+      slider.value = deg;
+      fin.a = deg;
+      fin.b = nearest(deg);
+      out.textContent = T[idioma].gapOut(deg);
+      renderFinder();
+    });
+    renderFinder();
   </script>
 </body>
 </html>
