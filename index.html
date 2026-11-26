@@ -59,6 +59,32 @@
     summary { cursor: pointer; font-weight: bold; color: #0b2a44; }
     details ol, details p { margin: 8px 0 8px 0; }
     #diagram { width: 100%; height: auto; background: white; border: 1px solid #cfd8df; border-radius: 8px; }
+    .add { margin-top: 12px; padding: 10px 14px; font-size: 1rem; font-weight: bold; cursor: pointer;
+           background: #0b2a44; color: white; border: 0; border-radius: 6px; }
+    .add:hover { background: #12456f; }
+    #cartBtn { background: white; color: #0b2a44; border: 0; padding: 8px 14px; border-radius: 6px;
+               cursor: pointer; font-size: 1rem; font-weight: bold; }
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 20; }
+    #drawer { position: fixed; top: 0; right: 0; height: 100%; width: min(420px, 100%); background: white;
+              z-index: 21; transform: translateX(100%); transition: transform .25s; display: flex;
+              flex-direction: column; box-shadow: -4px 0 14px rgba(0,0,0,.2); }
+    body.cart-open #drawer { transform: none; }
+    body.cart-open #overlay { display: block; }
+    #drawer header { position: static; }
+    #cartItems { flex: 1; overflow-y: auto; padding: 8px 16px; }
+    .line { border-bottom: 1px solid #e1e7ec; padding: 12px 0; }
+    .line .nm { font-weight: bold; color: #0b2a44; font-size: .95rem; }
+    .line .row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+    .qty button { width: 32px; height: 32px; font-size: 1.1rem; border: 1px solid #cfd8df; background: white;
+                  border-radius: 6px; cursor: pointer; }
+    .qty span { display: inline-block; min-width: 32px; text-align: center; font-weight: bold; }
+    .rm { background: none; border: 0; color: #a33; cursor: pointer; font-size: .85rem; text-decoration: underline; }
+    #cartFoot { border-top: 2px solid #0b2a44; padding: 16px; }
+    #cartTotal { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
+    #cartFoot .boton { display: block; text-align: center; margin: 0; width: 100%; border: 0; cursor: pointer; font-size: 1rem; }
+    #cartMsg { font-size: .85rem; color: #1b7a3a; margin: 10px 0 0; }
+    #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1b7a3a; color: white;
+             padding: 10px 18px; border-radius: 6px; z-index: 30; display: none; }
     @media (max-width: 760px) { .finder-grid { grid-template-columns: 1fr; } }
     @media (max-width: 600px) { .hero h1 { font-size: 1.8rem; } }
   </style>
@@ -69,6 +95,7 @@
     <nav>
       <a href="#products" data-en="Products" data-es="Productos">Products</a>
       <a href="#custom" data-en="Custom orders" data-es="Pedidos personalizados">Custom orders</a>
+      <button id="cartBtn" aria-label="Open cart"><span data-en="Cart" data-es="Carrito">Cart</span> (<span id="cartCount">0</span>)</button>
       <button id="lang">Español</button>
     </nav>
   </header>
@@ -184,6 +211,21 @@
   <footer data-en="Concept demo for learning purposes. Not affiliated with Stainless Marine."
           data-es="Demo conceptual con fines de aprendizaje. Sin afiliación con Stainless Marine.">Concept demo for learning purposes. Not affiliated with Stainless Marine.</footer>
 
+  <div id="overlay"></div>
+  <aside id="drawer" aria-label="Shopping cart">
+    <header>
+      <strong data-en="Your cart" data-es="Tu carrito">Your cart</strong>
+      <button id="closeCart" style="background:transparent;color:white;border:1px solid white;border-radius:6px;padding:6px 12px;cursor:pointer;font-size:1rem" data-en="Close" data-es="Cerrar">Close</button>
+    </header>
+    <div id="cartItems"></div>
+    <div id="cartFoot">
+      <div id="cartTotal"><span data-en="Total" data-es="Total">Total</span><span id="cartSum">$0.00</span></div>
+      <button class="boton" id="sendQuote" data-en="Request a quote" data-es="Pedir cotización">Request a quote</button>
+      <p id="cartMsg" role="status"></p>
+    </div>
+  </aside>
+  <div id="toast" role="status"></div>
+
   <script>
     var boton = document.getElementById('lang');
     var idioma = 'en';
@@ -200,6 +242,7 @@
       });
       boton.textContent = nuevo === 'en' ? 'Español' : 'English';
       renderFinder();
+      renderCart();
     }
     boton.addEventListener('click', function () {
       cambiarIdioma(idioma === 'en' ? 'es' : 'en');
@@ -322,6 +365,92 @@
       renderFinder();
     });
     renderFinder();
+
+    // ---------- Shopping cart (demo: no real payments) ----------
+    var CT = {
+      en: { empty: 'Your cart is empty.', add: 'Add to cart', added: 'Added to cart', remove: 'Remove',
+            sent: 'Demo only: in the real site this would send your list to the shop for a quote.' },
+      es: { empty: 'Tu carrito está vacío.', add: 'Agregar al carrito', added: 'Agregado al carrito', remove: 'Quitar',
+            sent: 'Solo demo: en el sitio real esto enviaría tu lista a la tienda para una cotización.' }
+    };
+    var products = {};
+    var cart = {};
+    try { cart = JSON.parse(localStorage.getItem('sm-cart') || '{}') || {}; } catch (e) { cart = {}; }
+
+    function money(n) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function saveCart() { try { localStorage.setItem('sm-cart', JSON.stringify(cart)); } catch (e) {} }
+
+    // turn every product card into a product with an "Add to cart" button
+    document.querySelectorAll('.card').forEach(function (card, i) {
+      var priceEl = card.querySelector('.price');
+      var title = card.querySelector('h3');
+      if (!priceEl || !title) return;
+      var id = 'p' + i;
+      products[id] = {
+        en: title.getAttribute('data-en'),
+        es: title.getAttribute('data-es'),
+        price: parseFloat(priceEl.textContent.replace(/[$,]/g, ''))
+      };
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'add';
+      btn.setAttribute('data-en', CT.en.add);
+      btn.setAttribute('data-es', CT.es.add);
+      btn.textContent = CT[idioma].add;
+      btn.addEventListener('click', function () {
+        cart[id] = (cart[id] || 0) + 1;
+        saveCart();
+        renderCart();
+        showToast(CT[idioma].added + ': ' + products[id][idioma]);
+      });
+      card.appendChild(btn);
+    });
+
+    var toastTimer;
+    function showToast(msg) {
+      var el = document.getElementById('toast');
+      el.textContent = msg;
+      el.style.display = 'block';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { el.style.display = 'none'; }, 2000);
+    }
+
+    function renderCart() {
+      var ids = Object.keys(cart).filter(function (id) { return products[id] && cart[id] > 0; });
+      var html = '', total = 0, count = 0;
+      ids.forEach(function (id) {
+        var p = products[id], q = cart[id];
+        total += p.price * q; count += q;
+        html += '<div class="line"><div class="nm">' + p[idioma] + '</div>' +
+          '<div class="row"><div class="qty"><button data-act="minus" data-id="' + id + '" aria-label="-">−</button>' +
+          '<span>' + q + '</span><button data-act="plus" data-id="' + id + '" aria-label="+">+</button></div>' +
+          '<strong>' + money(p.price * q) + '</strong></div>' +
+          '<button class="rm" data-act="rm" data-id="' + id + '">' + CT[idioma].remove + '</button></div>';
+      });
+      document.getElementById('cartItems').innerHTML = html || '<p>' + CT[idioma].empty + '</p>';
+      document.getElementById('cartSum').textContent = money(total);
+      document.getElementById('cartCount').textContent = count;
+      document.getElementById('sendQuote').disabled = count === 0;
+    }
+
+    function openCart(open) { document.body.classList.toggle('cart-open', open); }
+    document.getElementById('cartBtn').addEventListener('click', function () { openCart(true); });
+    document.getElementById('closeCart').addEventListener('click', function () { openCart(false); });
+    document.getElementById('overlay').addEventListener('click', function () { openCart(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') openCart(false); });
+    document.getElementById('cartItems').addEventListener('click', function (e) {
+      var act = e.target.getAttribute('data-act'), id = e.target.getAttribute('data-id');
+      if (!act || !id) return;
+      if (act === 'plus') cart[id] += 1;
+      if (act === 'minus') cart[id] -= 1;
+      if (act === 'rm' || cart[id] <= 0) delete cart[id];
+      saveCart();
+      renderCart();
+    });
+    document.getElementById('sendQuote').addEventListener('click', function () {
+      document.getElementById('cartMsg').textContent = CT[idioma].sent;
+    });
+    renderCart();
   </script>
 </body>
 </html>
