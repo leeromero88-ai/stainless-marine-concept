@@ -1,24 +1,85 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Stainless Marine | Piezas marinas en acero inoxidable</title>
+  <title>Stainless Marine | American-Made Stainless Steel Marine Parts</title>
   <style>
     body { margin: 0; font-family: Arial, sans-serif; color: #1a2530; }
-    header { background: #0b2a44; color: white; padding: 16px 24px; }
+    header { background: #0b2a44; color: white; padding: 16px 24px;
+             display: flex; justify-content: space-between; align-items: center; }
+    #lang { background: transparent; color: white; border: 1px solid white;
+            padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 1rem; }
     .hero { padding: 64px 24px; text-align: center; background: #e8eef3; }
     .hero h1 { font-size: 2.2rem; margin: 0 0 12px; }
     .boton { display: inline-block; margin-top: 20px; padding: 14px 28px;
              background: #0b2a44; color: white; text-decoration: none; border-radius: 6px; }
+    .productos { padding: 48px 24px; max-width: 1000px; margin: 0 auto; }
+    .productos h2 { text-align: center; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .card { border: 1px solid #cfd8df; border-radius: 8px; padding: 20px; }
+    .card h3 { margin-top: 0; color: #0b2a44; }
+    footer { background: #0b2a44; color: white; text-align: center; padding: 20px; font-size: 0.9rem; }
   </style>
 </head>
 <body>
-  <header><strong>STAINLESS MARINE</strong></header>
+  <header>
+    <strong>STAINLESS MARINE</strong>
+    <button id="lang">Español</button>
+  </header>
+
   <section class="hero">
-    <h1>Piezas marinas en acero inoxidable hechas en EE. UU.</h1>
-    <p>Soportes, múltiples de escape, cajas de batería y más.</p>
-    <a class="boton" href="#">Pedir cotización</a>
+    <h1 data-en="American-made stainless steel marine parts"
+        data-es="Piezas marinas en acero inoxidable hechas en EE. UU.">American-made stainless steel marine parts</h1>
+    <p data-en="Brackets, exhaust manifolds, battery boxes and more. Over 30 years of experience."
+       data-es="Soportes, múltiples de escape, cajas de batería y más. Más de 30 años de experiencia.">Brackets, exhaust manifolds, battery boxes and more. Over 30 years of experience.</p>
+    <a class="boton" href="#" data-en="Request a quote" data-es="Pedir cotización">Request a quote</a>
   </section>
+
+  <section class="productos">
+    <h2 data-en="Our products" data-es="Nuestros productos">Our products</h2>
+    <div class="grid">
+      <div class="card">
+        <h3 data-en="Outboard Engine Brackets" data-es="Soportes para motores fuera de borda">Outboard Engine Brackets</h3>
+        <p data-en="Marine-grade aluminum, powder coated." data-es="Aluminio de grado marino con pintura en polvo.">Marine-grade aluminum, powder coated.</p>
+      </div>
+      <div class="card">
+        <h3 data-en="Exhaust Manifolds" data-es="Múltiples de escape">Exhaust Manifolds</h3>
+        <p data-en="Water-cooled, with polished stainless risers." data-es="Enfriados por agua, con risers de acero pulido.">Water-cooled, with polished stainless risers.</p>
+      </div>
+      <div class="card">
+        <h3 data-en="Battery Boxes" data-es="Cajas de batería">Battery Boxes</h3>
+        <p data-en="Self-contained stainless boxes with cover." data-es="Cajas de acero inoxidable con tapa.">Self-contained stainless boxes with cover.</p>
+      </div>
+      <div class="card">
+        <h3 data-en="Exhaust Tips" data-es="Puntas de escape">Exhaust Tips</h3>
+        <p data-en="316L stainless steel in many sizes." data-es="Acero inoxidable 316L en varios tamaños.">316L stainless steel in many sizes.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer data-en="Concept demo for learning purposes. Not affiliated with Stainless Marine."
+          data-es="Demo conceptual con fines de aprendizaje. Sin afiliación con Stainless Marine.">Concept demo for learning purposes. Not affiliated with Stainless Marine.</footer>
+
+  <script>
+    var boton = document.getElementById('lang');
+    var idioma = 'en';
+    var titulos = {
+      en: 'Stainless Marine | American-Made Stainless Steel Marine Parts',
+      es: 'Stainless Marine | Piezas marinas en acero inoxidable'
+    };
+    function cambiarIdioma(nuevo) {
+      idioma = nuevo;
+      document.documentElement.lang = nuevo;
+      document.title = titulos[nuevo];
+      document.querySelectorAll('[data-en]').forEach(function (el) {
+        el.textContent = el.getAttribute('data-' + nuevo);
+      });
+      boton.textContent = nuevo === 'en' ? 'Español' : 'English';
+    }
+    boton.addEventListener('click', function () {
+      cambiarIdioma(idioma === 'en' ? 'es' : 'en');
+    });
+  </script>
 </body>
 </html>
