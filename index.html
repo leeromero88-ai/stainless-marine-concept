@@ -108,6 +108,23 @@
     .conf .hint { font-size: .85rem; color: #4a5a68; margin: 8px 0 0; }
     .empty { padding: 20px 4px; color: #4a5a68; }
     @media (max-width: 760px) { .shop-grid { grid-template-columns: 1fr; } #cats { position: static; flex-direction: row; overflow-x: auto; } #cats button { white-space: nowrap; } .item { flex-wrap: wrap; } }
+
+
+    .ba { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; margin: 18px 0 26px; align-items: end; }
+    .ba figure { margin: 0; position: relative; }
+    .ba img { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid #cfd8df; }
+    .ba figcaption { font-size: .9rem; color: #4a5a68; margin-top: 6px; }
+    .ba .tag { position: absolute; top: 10px; left: 10px; background: #0b2a44; color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: .85rem; }
+    .ba .tag.after { background: #1b7a3a; }
+    @media (max-width: 600px) { .ba { grid-template-columns: 1fr; } }
+    .gallery { columns: 3 240px; column-gap: 14px; }
+    .gallery figure { margin: 0 0 14px; break-inside: avoid; cursor: zoom-in; }
+    .gallery img { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid #cfd8df; }
+    .gallery figcaption { font-size: .85rem; color: #4a5a68; margin-top: 6px; }
+    #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 40; align-items: center; justify-content: center; flex-direction: column; padding: 16px; cursor: zoom-out; }
+    #lightbox.on { display: flex; }
+    #lightbox img { max-width: 100%; max-height: 84vh; border-radius: 6px; }
+    #lightbox p { color: white; margin: 10px 0 0; text-align: center; }
     @media (max-width: 760px) { .finder-grid { grid-template-columns: 1fr; } }
     @media (max-width: 600px) { .hero h1 { font-size: 1.8rem; } }
   </style>
@@ -117,6 +134,7 @@
     <strong>STAINLESS MARINE</strong>
     <nav>
       <a href="#products" data-en="Products" data-es="Productos">Products</a>
+      <a href="#made" data-en="How we build" data-es="Fabricación">How we build</a>
       <a href="#custom" data-en="Custom orders" data-es="Pedidos personalizados">Custom orders</a>
       <button id="cartBtn" aria-label="Open cart"><span data-en="Cart" data-es="Carrito">Cart</span> (<span id="cartCount">0</span>)</button>
       <button id="lang">Español</button>
@@ -204,6 +222,23 @@
     <p class="nota" data-en="Product names are shown in English. Final pricing is confirmed with each quote." data-es="Los nombres de producto se muestran en inglés. El precio final se confirma con cada cotización.">Product names are shown in English. Final pricing is confirmed with each quote.</p>
   </section>
 
+  <section class="bloque" id="made">
+    <h2 data-en="How we build them" data-es="Cómo los fabricamos">How we build them</h2>
+    <p class="intro" data-en="Every bracket is cut, formed and welded by hand in aluminum, then powder coated. Tap a photo to enlarge it." data-es="Cada soporte se corta, forma y suelda a mano en aluminio, y luego se pinta en polvo. Toca una foto para agrandarla.">Every bracket is cut, formed and welded by hand in aluminum, then powder coated. Tap a photo to enlarge it.</p>
+    <div class="ba">
+      <figure><span class="tag" data-en="Before" data-es="Antes">Before</span><img src="img/platform.webp" width="1400" height="1050" loading="lazy" alt="Bare aluminum bracket with platform"><figcaption data-en="Welded and finished in bare aluminum" data-es="Soldado y terminado en aluminio sin pintar">Welded and finished in bare aluminum</figcaption></figure>
+      <figure><span class="tag after" data-en="After" data-es="Después">After</span><img src="img/final.webp" width="1050" height="1400" loading="lazy" alt="Powder coated black bracket"><figcaption data-en="Powder coated in marine-grade black" data-es="Pintado en polvo, negro de grado marino">Powder coated in marine-grade black</figcaption></figure>
+    </div>
+    <div class="gallery">
+      <figure><img src="img/hull.webp" width="1050" height="1400" loading="lazy" alt="Hull formed and clamped for welding"><figcaption data-en="Hull formed and clamped for welding" data-es="Casco formado y sujetado para soldar">Hull formed and clamped for welding</figcaption></figure>
+      <figure><img src="img/ribs.webp" width="1400" height="1050" loading="lazy" alt="Internal ribs: strength you never see"><figcaption data-en="Internal ribs: strength you never see" data-es="Costillas internas: resistencia que no se ve">Internal ribs: strength you never see</figcaption></figure>
+      <figure><img src="img/cutouts.webp" width="1400" height="1050" loading="lazy" alt="Engine cut-outs and welded seams"><figcaption data-en="Engine cut-outs and welded seams" data-es="Aberturas para motor y cordones soldados">Engine cut-outs and welded seams</figcaption></figure>
+      <figure><img src="img/weld.webp" width="1050" height="1400" loading="lazy" alt="Hand-finished TIG welds"><figcaption data-en="Hand-finished TIG welds" data-es="Soldaduras TIG terminadas a mano">Hand-finished TIG welds</figcaption></figure>
+      <figure><img src="img/deck.webp" width="1400" height="1050" loading="lazy" alt="Platform deck taking shape"><figcaption data-en="Platform deck taking shape" data-es="La cubierta de la plataforma tomando forma">Platform deck taking shape</figcaption></figure>
+      <figure><img src="img/pads.webp" width="1400" height="1050" loading="lazy" alt="Platform and engine mounting pads"><figcaption data-en="Platform and engine mounting pads" data-es="Plataforma y bases de montaje del motor">Platform and engine mounting pads</figcaption></figure>
+      </div>
+  </section>
+
   <section class="custom" id="custom">
     <h2 data-en="Need something custom?" data-es="¿Necesitas algo a la medida?">Need something custom?</h2>
     <p data-en="Tell us your boat and engine setup and we will build the right bracket or exhaust system for it." data-es="Cuéntanos tu bote y la configuración de tus motores y fabricamos el soporte o sistema de escape ideal.">Tell us your boat and engine setup and we will build the right bracket or exhaust system for it.</p>
@@ -226,6 +261,7 @@
       <p id="cartMsg" role="status"></p>
     </div>
   </aside>
+  <div id="lightbox" role="dialog" aria-label="Photo"><img alt=""><p></p></div>
   <div id="toast" role="status"></div>
 
   <script src="catalog.js"></script>
@@ -556,6 +592,20 @@
     });
     renderCatalog();
     renderCart();
+
+    // ---------- Photo lightbox ----------
+    (function () {
+      var lb = document.getElementById('lightbox'), im = lb.querySelector('img'), cap = lb.querySelector('p');
+      document.querySelectorAll('.gallery figure').forEach(function (f) {
+        f.addEventListener('click', function () {
+          var src = f.querySelector('img');
+          im.src = src.src; im.alt = src.alt; cap.textContent = f.querySelector('figcaption').textContent;
+          lb.classList.add('on');
+        });
+      });
+      lb.addEventListener('click', function () { lb.classList.remove('on'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') lb.classList.remove('on'); });
+    })();
   </script>
 </body>
 </html>
