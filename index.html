@@ -125,6 +125,13 @@
     #lightbox.on { display: flex; }
     #lightbox img { max-width: 100%; max-height: 84vh; border-radius: 6px; }
     #lightbox p { color: white; margin: 10px 0 0; text-align: center; }
+
+    #cartFoot { max-height: 65vh; overflow-y: auto; }
+    #quoteForm { margin-top: 12px; }
+    #quoteForm label { display: block; font-size: .8rem; color: #4a5a68; margin-top: 8px; }
+    #quoteForm input, #quoteForm textarea { width: 100%; box-sizing: border-box; padding: 8px; font-size: 1rem; border: 1px solid #cfd8df; border-radius: 6px; font-family: inherit; }
+    #quoteForm .boton { margin-top: 12px; }
+    #cartMsg.err { color: #a33; }
     @media (max-width: 760px) { .finder-grid { grid-template-columns: 1fr; } }
     @media (max-width: 600px) { .hero h1 { font-size: 1.8rem; } }
   </style>
@@ -227,7 +234,7 @@
     <p class="intro" data-en="Every bracket is cut, formed and welded by hand in aluminum, then powder coated. Tap a photo to enlarge it." data-es="Cada soporte se corta, forma y suelda a mano en aluminio, y luego se pinta en polvo. Toca una foto para agrandarla.">Every bracket is cut, formed and welded by hand in aluminum, then powder coated. Tap a photo to enlarge it.</p>
     <div class="ba">
       <figure><span class="tag" data-en="Before" data-es="Antes">Before</span><img src="img/platform.webp" width="1400" height="1050" loading="lazy" alt="Bare aluminum bracket with platform"><figcaption data-en="Welded and finished in bare aluminum" data-es="Soldado y terminado en aluminio sin pintar">Welded and finished in bare aluminum</figcaption></figure>
-      <figure><span class="tag after" data-en="After" data-es="Después">After</span><img src="img/final.webp" width="1400" height="1306" loading="lazy" alt="Powder coated black bracket"><figcaption data-en="Powder coated in black" data-es="Pintado en polvo, color negro">Powder coated in black</figcaption></figure>
+      <figure><span class="tag after" data-en="After" data-es="Después">After</span><img src="img/final.webp" width="1050" height="1400" loading="lazy" alt="Powder coated black bracket"><figcaption data-en="Powder coated in black" data-es="Pintado en polvo, color negro">Powder coated in black</figcaption></figure>
     </div>
     <div class="gallery">
       <figure><img src="img/hull.webp" width="1050" height="1400" loading="lazy" alt="Hull formed and clamped for welding"><figcaption data-en="Hull formed and clamped for welding" data-es="Casco formado y sujetado para soldar">Hull formed and clamped for welding</figcaption></figure>
@@ -235,7 +242,7 @@
       <figure><img src="img/cutouts.webp" width="1400" height="1050" loading="lazy" alt="Engine cut-outs and welded seams"><figcaption data-en="Engine cut-outs and welded seams" data-es="Aberturas para motor y cordones soldados">Engine cut-outs and welded seams</figcaption></figure>
       <figure><img src="img/weld.webp" width="1050" height="1400" loading="lazy" alt="Hand-finished TIG welds"><figcaption data-en="Hand-finished TIG welds" data-es="Soldaduras TIG terminadas a mano">Hand-finished TIG welds</figcaption></figure>
       <figure><img src="img/deck.webp" width="1400" height="1050" loading="lazy" alt="Platform deck taking shape"><figcaption data-en="Platform deck taking shape" data-es="La cubierta de la plataforma tomando forma">Platform deck taking shape</figcaption></figure>
-      <figure><img src="img/pads.webp" width="1400" height="791" loading="lazy" alt="Platform and engine mounting pads"><figcaption data-en="Platform and engine mounting pads" data-es="Plataforma y bases de montaje del motor">Platform and engine mounting pads</figcaption></figure>
+      <figure><img src="img/pads.webp" width="1400" height="1050" loading="lazy" alt="Platform and engine mounting pads"><figcaption data-en="Platform and engine mounting pads" data-es="Plataforma y bases de montaje del motor">Platform and engine mounting pads</figcaption></figure>
       </div>
   </section>
 
@@ -258,6 +265,13 @@
     <div id="cartFoot">
       <div id="cartTotal"><span data-en="Total" data-es="Total">Total</span><span id="cartSum">$0.00</span></div>
       <button class="boton" id="sendQuote" data-en="Request a quote" data-es="Pedir cotización">Request a quote</button>
+      <form id="quoteForm" hidden novalidate>
+        <label id="lbName" for="qName"></label><input id="qName" maxlength="120" autocomplete="name">
+        <label id="lbContact" for="qContact"></label><input id="qContact" maxlength="160" autocomplete="email">
+        <label id="lbDetails" for="qDetails"></label><textarea id="qDetails" rows="3" maxlength="2000"></textarea>
+        <input id="qWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+        <button class="boton" id="qSubmit" type="submit"></button>
+      </form>
       <p id="cartMsg" role="status"></p>
     </div>
   </aside>
@@ -283,6 +297,7 @@
       renderFinder();
       renderCatalog();
       renderCart();
+      if (typeof renderQuoteLabels === 'function') renderQuoteLabels();
     }
     boton.addEventListener('click', function () {
       cambiarIdioma(idioma === 'en' ? 'es' : 'en');
@@ -414,14 +429,18 @@
             cfg: 'Build your bracket', type: 'Type', mini: 'Mini', single: 'Single', twin: 'Twin', len: 'Length', plat: 'Platform',
             noplat: 'No platform', platS: 'With 72" platform', platT: 'With 82" platform', deg: 'Angle', color: 'Color',
             black: 'Black', off: 'Off-white', white: 'White', useFinder: 'Use my transom angle', finderNote: 'Not sure of the angle? Use the finder above.',
-            fixed12: 'This size is made in 12° only.', total: 'Price' },
+            fixed12: 'This size is made in 12° only.', total: 'Price',
+            qName: 'Your name', qContact: 'Email or phone', qDetails: 'Boat, engine and anything else we should know', qSend: 'Send quote request', qSending: 'Sending...',
+            qOk: 'Thank you! We received your request and will get back to you.', qDemo: 'Demo mode: the email service is not connected yet, so nothing was sent.', qFail: 'Could not send. Please try again.', qNeed: 'Please add your name and a way to reach you.' },
       es: { empty: 'Tu carrito está vacío.', add: 'Agregar al carrito', quote: 'Pedir cotización', added: 'Agregado al carrito', remove: 'Quitar',
             sent: 'Solo demo: en el sitio real esto enviaría tu lista a la tienda para una cotización.',
             all: 'Todo', search: 'Buscar productos...', more: 'Ver más', none: 'No se encontraron productos.', quoteTag: 'Cotizar',
             cfg: 'Arma tu soporte', type: 'Tipo', mini: 'Mini', single: 'Individual', twin: 'Doble', len: 'Largo', plat: 'Plataforma',
             noplat: 'Sin plataforma', platS: 'Con plataforma de 72"', platT: 'Con plataforma de 82"', deg: 'Ángulo', color: 'Color',
             black: 'Negro', off: 'Hueso', white: 'Blanco', useFinder: 'Usar el ángulo de mi transom', finderNote: '¿No sabes el ángulo? Usa el buscador de arriba.',
-            fixed12: 'Esta medida se fabrica solo en 12°.', total: 'Precio' }
+            fixed12: 'Esta medida se fabrica solo en 12°.', total: 'Precio',
+            qName: 'Tu nombre', qContact: 'Correo o teléfono', qDetails: 'Bote, motor y cualquier detalle que debamos saber', qSend: 'Enviar solicitud', qSending: 'Enviando...',
+            qOk: '¡Gracias! Recibimos tu solicitud y te contactaremos.', qDemo: 'Modo demo: el servicio de correo aún no está conectado, así que no se envió nada.', qFail: 'No se pudo enviar. Inténtalo de nuevo.', qNeed: 'Agrega tu nombre y una forma de contactarte.' }
     };
     var BR = {
       mini:   { 7: [680], 9: [860], 12: [990] },
@@ -587,8 +606,44 @@
       if (act === 'rm' || cart[id].q <= 0) delete cart[id];
       saveCart(); renderCart();
     });
+    function renderQuoteLabels() {
+      var L = CT[idioma];
+      document.getElementById('lbName').textContent = L.qName;
+      document.getElementById('lbContact').textContent = L.qContact;
+      document.getElementById('lbDetails').textContent = L.qDetails;
+      document.getElementById('qSubmit').textContent = L.qSend;
+    }
     document.getElementById('sendQuote').addEventListener('click', function () {
-      document.getElementById('cartMsg').textContent = CT[idioma].sent;
+      var f = document.getElementById('quoteForm');
+      f.hidden = !f.hidden;
+      renderQuoteLabels();
+      if (!f.hidden) document.getElementById('qName').focus();
+    });
+    document.getElementById('quoteForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var L = CT[idioma], msg = document.getElementById('cartMsg'), btn = document.getElementById('qSubmit');
+      var name = document.getElementById('qName').value.trim(), contact = document.getElementById('qContact').value.trim();
+      msg.className = '';
+      if (!name || !contact) { msg.className = 'err'; msg.textContent = L.qNeed; return; }
+      var items = [], total = 0;
+      Object.keys(cart).forEach(function (id) {
+        var p = cart[id]; if (p.q <= 0) return;
+        items.push({ name: p.en, qty: p.q, price: p.price });
+        if (p.price != null) total += p.price * p.q;
+      });
+      btn.disabled = true; btn.textContent = L.qSending;
+      fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, contact: contact, details: document.getElementById('qDetails').value,
+          website: document.getElementById('qWebsite').value, items: items, total: total, lang: idioma }) })
+        .then(function (r) {
+          if (r.ok) {
+            msg.textContent = L.qOk; cart = {}; saveCart(); renderCart();
+            document.getElementById('quoteForm').hidden = true; document.getElementById('quoteForm').reset();
+          } else if (r.status === 501 || r.status === 404) { msg.textContent = L.qDemo; }
+          else { msg.className = 'err'; msg.textContent = L.qFail; }
+        })
+        .catch(function () { msg.className = 'err'; msg.textContent = L.qFail; })
+        .then(function () { btn.disabled = false; btn.textContent = L.qSend; });
     });
     renderCatalog();
     renderCart();
