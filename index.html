@@ -156,6 +156,12 @@
       #lang, #cartBtn { padding: 5px 10px; font-size: .9rem; }
       section[id] { scroll-margin-top: 110px; }
     }
+    .pv { display: flex; gap: 14px; justify-content: center; align-items: flex-end; flex-wrap: wrap; background: #e8eef3; border-radius: 8px; padding: 12px; margin-bottom: 14px; }
+    .pv figure { margin: 0; text-align: center; font-size: .8rem; color: #4a5a68; }
+    .pv svg { display: block; width: 100%; height: auto; max-width: 300px; }
+    .pv figure.side svg { max-width: 160px; }
+    #cats button .lb { display: inline-flex; align-items: center; gap: 8px; text-align: left; }
+    #cats button .lb svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   </style>
 </head>
 <body>
@@ -522,13 +528,15 @@
     }
     function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
 
+var CAT_ICON = {"all": "<rect x=\"4\" y=\"4\" width=\"7\" height=\"7\"/><rect x=\"13\" y=\"4\" width=\"7\" height=\"7\"/><rect x=\"4\" y=\"13\" width=\"7\" height=\"7\"/><rect x=\"13\" y=\"13\" width=\"7\" height=\"7\"/>", "br": "<path d=\"M3 8h18M3 8v11M21 8v11M7 8v7M17 8v7\"/>", "man": "<path d=\"M3 6h18v5H3zM6 11v7M12 11v7M18 11v7\"/>", "macc": "<path d=\"M12 3l7 4v10l-7 4-7-4V7z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>", "dsl": "<path d=\"M5 21V10a6 6 0 0 1 6-6h10\"/>", "tips": "<path d=\"M3 9h9l8-4v14l-8-4H3z\"/>", "rings": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/>", "elb": "<path d=\"M3 5v14M3 5h6l12 4v6l-12 4H3\"/>", "cool": "<path d=\"M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z\"/>", "xover": "<path d=\"M10 14.5V5a2 2 0 0 1 4 0v9.5a4 4 0 1 1-4 0z\"/>", "strn": "<path d=\"M6 6a6 3 0 0 1 12 0v12a6 3 0 0 1-12 0zM6 6a6 3 0 0 0 12 0M9 12v6M12 13v6M15 12v6\"/>", "pick": "<path d=\"M3 6h18M12 6v10M8 12l4 4 4-4M5 20h14\"/>", "ind": "<path d=\"M4 17a8 8 0 0 1 16 0zM12 17l4-6\"/>", "jack": "<path d=\"M5 3h14v18H5zM12 7v10M8 6h.01M16 6h.01M8 18h.01M16 18h.01\"/>", "lad": "<path d=\"M7 3v18M17 3v18M7 8h10M7 13h10M7 18h10\"/>", "batt": "<path d=\"M3 8h18v12H3zM7 8V5h3v3M14 8V5h3v3M6 14h4M14 14h4M16 12v4\"/>", "oth": "<path d=\"M5 12h.01M12 12h.01M19 12h.01\" stroke-width=\"3.2\"/>"};
+    function catIcon(k) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + (CAT_ICON[k] || CAT_ICON.oth) + '</svg>'; }
     function renderCats() {
       var counts = { all: ALL.length };
       ALL.forEach(function (it) { counts[it.c] = (counts[it.c] || 0) + 1; });
-      var h = '<button data-cat="all" class="' + (shop.cat === 'all' ? 'sel' : '') + '">' + CT[idioma].all + '<span>' + counts.all + '</span></button>';
+      var h = '<button data-cat="all" class="' + (shop.cat === 'all' ? 'sel' : '') + '"><b class="lb" style="font-weight:normal">' + catIcon('all') + CT[idioma].all + '</b><span>' + counts.all + '</span></button>';
       CATS.forEach(function (c) {
         if (!counts[c.k]) return;
-        h += '<button data-cat="' + c.k + '" class="' + (shop.cat === c.k ? 'sel' : '') + '">' + c[idioma] + '<span>' + counts[c.k] + '</span></button>';
+        h += '<button data-cat="' + c.k + '" class="' + (shop.cat === c.k ? 'sel' : '') + '"><b class="lb" style="font-weight:normal">' + catIcon(c.k) + c[idioma] + '</b><span>' + counts[c.k] + '</span></button>';
       });
       document.getElementById('cats').innerHTML = h;
     }
@@ -550,6 +558,38 @@
       return { price: price, en: en, es: es, hasPlat: hasPlat, fixed: fixed, id: 'br-' + t + '-' + cfg.len + '-' + cfg.plat + '-' + cfg.deg + '-' + cfg.color };
     }
     function opt(v, label, cur) { return '<option value="' + v + '"' + (String(cur) === String(v) ? ' selected' : '') + '>' + label + '</option>'; }
+    function bracketSVG(info) {
+      var T2 = { en: { rear: 'Rear view', side: 'Side view', note: 'Illustration, not to scale' },
+                 es: { rear: 'Vista trasera', side: 'Vista lateral', note: 'Ilustración, no a escala' } }[idioma];
+      var fill = { black: '#1b1b1b', off: '#ebe5d3', white: '#ffffff' }[cfg.color];
+      var w = Math.max(70, Math.min(228, cfg.len * 6.2)), x = (260 - w) / 2, twin = cfg.type === 'twin';
+      var motor = function (cx, sc) {
+        var mw = 34 * sc, mh = 46 * sc;
+        return '<rect x="' + (cx - mw / 2) + '" y="' + (68 - mh) + '" width="' + mw + '" height="' + mh + '" rx="7" fill="#5b6b78" stroke="#33414d"/>' +
+               '<rect x="' + (cx - mw / 2 + 4) + '" y="' + (68 - mh + 5) + '" width="' + (mw - 8) + '" height="8" rx="3" fill="#7f909d"/>';
+      };
+      var motors = twin ? motor(x + w * 0.27, 1) + motor(x + w * 0.73, 1) : motor(130, cfg.type === 'mini' ? 0.8 : 1);
+      var plat = cfg.plat ? '<rect x="' + (130 - (twin ? 120 : 104)) + '" y="92" width="' + (twin ? 240 : 208) + '" height="9" rx="2" fill="' + fill + '" stroke="#0b2a44" stroke-width="1"/>' : '';
+      var rear = '<svg viewBox="0 0 260 150" role="img" aria-label="' + T2.rear + '">' +
+        '<rect x="8" y="101" width="244" height="40" rx="4" fill="#9fb0bd"/>' +
+        motors +
+        '<rect x="' + x + '" y="68" width="' + w + '" height="24" rx="3" fill="' + fill + '" stroke="#0b2a44" stroke-width="1.2"/>' +
+        '<rect x="' + (x + 6) + '" y="92" width="10" height="9" fill="' + fill + '" stroke="#0b2a44"/><rect x="' + (x + w - 16) + '" y="92" width="10" height="9" fill="' + fill + '" stroke="#0b2a44"/>' +
+        plat +
+        '<path d="M' + x + ' 14h' + w + 'M' + x + ' 9v10M' + (x + w) + ' 9v10" stroke="#0b2a44" stroke-width="1" fill="none"/>' +
+        '<text x="130" y="11" text-anchor="middle" font-size="11" fill="#0b2a44" font-family="Arial" style="paint-order:stroke" stroke="#e8eef3" stroke-width="4">' + cfg.len + '"</text></svg>';
+      var d = cfg.deg, t = 110 * Math.tan(d * Math.PI / 180), hullX = 60;
+      var side = '<svg viewBox="0 0 150 150" role="img" aria-label="' + T2.side + '">' +
+        '<polygon points="' + hullX + ',20 ' + (hullX + t) + ',130 140,130 140,20" fill="#9fb0bd"/>' +
+        '<polygon points="' + hullX + ',20 ' + hullX + ',130 ' + (hullX + t) + ',130" fill="' + fill + '" stroke="#0b2a44" stroke-width="1.2"/>' +
+        '<rect x="14" y="34" width="' + (hullX - 16) + '" height="84" rx="7" fill="#5b6b78" stroke="#33414d"/>' +
+        '<path d="M' + hullX + ' 12v126" stroke="#0b2a44" stroke-width="1" stroke-dasharray="4 3"/>' +
+        '<text x="' + (hullX + t + 8) + '" y="124" font-size="13" font-weight="bold" fill="#0b2a44" font-family="Arial">' + d + '°</text></svg>';
+      return '<div class="pv"><figure>' + rear + '<figcaption>' + T2.rear + '</figcaption></figure>' +
+             '<figure class="side">' + side + '<figcaption>' + T2.side + '</figcaption></figure>' +
+             '<figcaption style="flex-basis:100%;text-align:center;font-size:.75rem;color:#6a7a88">' + T2.note + '</figcaption></div>';
+    }
+
     function renderConfigurator() {
       var box = document.getElementById('configurator');
       if (!(shop.cat === 'br' || shop.cat === 'all') || shop.q) { box.innerHTML = ''; return; }
@@ -557,7 +597,7 @@
       var lens = Object.keys(BR[cfg.type]).map(function (k) { return opt(k, k + '"', cfg.len); }).join('');
       var degs = info.fixed ? opt(12, '12°', 12) : [11, 13, 15].map(function (d) { return opt(d, d + '°', cfg.deg); }).join('');
       var platLbl = cfg.type === 'twin' ? L.platT : L.platS;
-      box.innerHTML = '<div class="conf"><h3>' + L.cfg + '</h3><div class="fields">' +
+      box.innerHTML = '<div class="conf"><h3>' + L.cfg + '</h3>' + bracketSVG(info) + '<div class="fields">' +
         '<div><label for="cf-type">' + L.type + '</label><select id="cf-type">' + opt('mini', L.mini, cfg.type) + opt('single', L.single, cfg.type) + opt('twin', L.twin, cfg.type) + '</select></div>' +
         '<div><label for="cf-len">' + L.len + '</label><select id="cf-len">' + lens + '</select></div>' +
         '<div><label for="cf-plat">' + L.plat + '</label><select id="cf-plat"' + (info.hasPlat ? '' : ' disabled') + '>' + opt(0, L.noplat, cfg.plat) + (info.hasPlat ? opt(1, platLbl, cfg.plat) : '') + '</select></div>' +
