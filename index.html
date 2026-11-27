@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stainless Marine | American-Made Stainless Steel Marine Parts</title>
+<link rel="icon" href="data:,">
   <meta name="description" content="American-made stainless steel marine parts: outboard engine brackets, exhaust manifolds, exhaust tips and battery boxes. Over 30 years of experience.">
   <style>
     * { box-sizing: border-box; }
@@ -148,6 +149,7 @@
     </nav>
   </header>
 
+  <main id="main">
   <section class="hero">
     <h1 data-en="American-made stainless steel marine parts"
         data-es="Piezas marinas en acero inoxidable hechas en EE. UU.">American-made stainless steel marine parts</h1>
@@ -252,6 +254,7 @@
     <a class="boton" href="#" data-en="Request a quote" data-es="Pedir cotización">Request a quote</a>
   </section>
 
+  </main>
   <footer data-en="Concept demo for learning purposes. Not affiliated with Stainless Marine."
           data-es="Demo conceptual con fines de aprendizaje. Sin afiliación con Stainless Marine.">Concept demo for learning purposes. Not affiliated with Stainless Marine.</footer>
 
@@ -507,11 +510,11 @@
       var degs = info.fixed ? opt(12, '12°', 12) : [11, 13, 15].map(function (d) { return opt(d, d + '°', cfg.deg); }).join('');
       var platLbl = cfg.type === 'twin' ? L.platT : L.platS;
       box.innerHTML = '<div class="conf"><h3>' + L.cfg + '</h3><div class="fields">' +
-        '<div><label>' + L.type + '</label><select id="cf-type">' + opt('mini', L.mini, cfg.type) + opt('single', L.single, cfg.type) + opt('twin', L.twin, cfg.type) + '</select></div>' +
-        '<div><label>' + L.len + '</label><select id="cf-len">' + lens + '</select></div>' +
-        '<div><label>' + L.plat + '</label><select id="cf-plat"' + (info.hasPlat ? '' : ' disabled') + '>' + opt(0, L.noplat, cfg.plat) + (info.hasPlat ? opt(1, platLbl, cfg.plat) : '') + '</select></div>' +
-        '<div><label>' + L.deg + '</label><select id="cf-deg"' + (info.fixed ? ' disabled' : '') + '>' + degs + '</select></div>' +
-        '<div><label>' + L.color + '</label><select id="cf-color">' + opt('black', L.black, cfg.color) + opt('off', L.off, cfg.color) + opt('white', L.white, cfg.color) + '</select></div>' +
+        '<div><label for="cf-type">' + L.type + '</label><select id="cf-type">' + opt('mini', L.mini, cfg.type) + opt('single', L.single, cfg.type) + opt('twin', L.twin, cfg.type) + '</select></div>' +
+        '<div><label for="cf-len">' + L.len + '</label><select id="cf-len">' + lens + '</select></div>' +
+        '<div><label for="cf-plat">' + L.plat + '</label><select id="cf-plat"' + (info.hasPlat ? '' : ' disabled') + '>' + opt(0, L.noplat, cfg.plat) + (info.hasPlat ? opt(1, platLbl, cfg.plat) : '') + '</select></div>' +
+        '<div><label for="cf-deg">' + L.deg + '</label><select id="cf-deg"' + (info.fixed ? ' disabled' : '') + '>' + degs + '</select></div>' +
+        '<div><label for="cf-color">' + L.color + '</label><select id="cf-color">' + opt('black', L.black, cfg.color) + opt('off', L.off, cfg.color) + opt('white', L.white, cfg.color) + '</select></div>' +
         '</div><div class="tot"><p class="big">' + money(info.price) + '</p>' +
         '<button class="add" id="cf-add" type="button">' + L.add + '</button>' +
         (info.fixed ? '' : '<button class="add q" id="cf-finder" type="button">' + L.useFinder + ' (' + fin.b + '°)</button>') + '</div>' +
