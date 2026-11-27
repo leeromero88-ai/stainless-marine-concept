@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stainless Marine | American-Made Stainless Steel Marine Parts</title>
-<link rel="icon" href="data:,">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%230b2a44%27/%3E%3Ctext x=%2732%27 y=%2742%27 font-family=%27Arial%27 font-weight=%27bold%27 font-size=%2728%27 text-anchor=%27middle%27 fill=%27white%27%3ESM%3C/text%3E%3C/svg%3E">
+  <meta name="theme-color" content="#0b2a44">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Stainless Marine | American-Made Stainless Steel Marine Parts">
+  <meta property="og:description" content="Outboard engine brackets, exhaust manifolds, exhaust tips and battery boxes. Concept demo.">
   <meta name="description" content="American-made stainless steel marine parts: outboard engine brackets, exhaust manifolds, exhaust tips and battery boxes. Over 30 years of experience.">
   <style>
     * { box-sizing: border-box; }
@@ -135,6 +139,23 @@
     #cartMsg.err { color: #a33; }
     @media (max-width: 760px) { .finder-grid { grid-template-columns: 1fr; } }
     @media (max-width: 600px) { .hero h1 { font-size: 1.8rem; } }
+    .faq details { border: 1px solid #cfd8df; border-radius: 8px; padding: 12px 16px; margin: 10px 0; background: white; }
+    .faq summary { cursor: pointer; font-weight: bold; color: #0b2a44; }
+    .faq details p { margin: 10px 0 2px; color: #33424f; }
+    .contact form { display: grid; gap: 8px; max-width: 560px; }
+    .contact label { font-weight: bold; margin-top: 6px; }
+    .contact input, .contact textarea { padding: 10px; border: 1px solid #9fb0bd; border-radius: 6px; font: inherit; width: 100%; }
+    .contact .boton { border: 0; cursor: pointer; font-size: 1rem; justify-self: start; }
+    .contact .boton:disabled { opacity: .6; cursor: default; }
+    #contactMsg { min-height: 1.4em; font-weight: bold; color: #1b7a3a; }
+    #contactMsg.err { color: #a33; }
+    section[id] { scroll-margin-top: 90px; }
+    @media (max-width: 600px) {
+      header { padding: 8px 14px; gap: 6px; }
+      header nav { gap: 6px 12px; font-size: .9rem; }
+      #lang, #cartBtn { padding: 5px 10px; font-size: .9rem; }
+      section[id] { scroll-margin-top: 110px; }
+    }
   </style>
 </head>
 <body>
@@ -144,6 +165,8 @@
       <a href="#products" data-en="Products" data-es="Productos">Products</a>
       <a href="#made" data-en="How we build" data-es="Fabricación">How we build</a>
       <a href="#custom" data-en="Custom orders" data-es="Pedidos personalizados">Custom orders</a>
+      <a href="#faq" data-en="FAQ" data-es="Preguntas">FAQ</a>
+      <a href="#contact" data-en="Contact" data-es="Contacto">Contact</a>
       <button id="cartBtn" aria-label="Open cart"><span data-en="Cart" data-es="Carrito">Cart</span> (<span id="cartCount">0</span>)</button>
       <button id="lang">Español</button>
     </nav>
@@ -251,7 +274,32 @@
   <section class="custom" id="custom">
     <h2 data-en="Need something custom?" data-es="¿Necesitas algo a la medida?">Need something custom?</h2>
     <p data-en="Tell us your boat and engine setup and we will build the right bracket or exhaust system for it." data-es="Cuéntanos tu bote y la configuración de tus motores y fabricamos el soporte o sistema de escape ideal.">Tell us your boat and engine setup and we will build the right bracket or exhaust system for it.</p>
-    <a class="boton" href="#" data-en="Request a quote" data-es="Pedir cotización">Request a quote</a>
+    <a class="boton" href="#contact" data-en="Request a quote" data-es="Pedir cotización">Request a quote</a>
+  </section>
+
+  <section class="bloque faq" id="faq">
+    <h2 data-en="Frequently asked questions" data-es="Preguntas frecuentes">Frequently asked questions</h2>
+      <details><summary data-en="How do I know which bracket angle I need?" data-es="¿Cómo sé qué ángulo de soporte necesito?">How do I know which bracket angle I need?</summary><p data-en="Use the transom angle finder near the top of the page. Enter your hull's transom angle and it recommends a standard bracket angle." data-es="Usa el buscador de ángulo de espejo cerca del inicio de la página. Ingresa el ángulo del espejo de tu casco y te recomienda el ángulo estándar del soporte.">Use the transom angle finder near the top of the page. Enter your hull's transom angle and it recommends a standard bracket angle.</p></details>
+      <details><summary data-en="What if I do not see my exact size or setup?" data-es="¿Y si no veo mi medida o configuración exacta?">What if I do not see my exact size or setup?</summary><p data-en="We build to order. Send a custom request below with your boat, engines and measurements." data-es="Fabricamos a pedido. Envía una solicitud personalizada más abajo con tu bote, motores y medidas.">We build to order. Send a custom request below with your boat, engines and measurements.</p></details>
+      <details><summary data-en="Why do some products show a quote instead of a price?" data-es="¿Por qué algunos productos piden cotización en vez de mostrar precio?">Why do some products show a quote instead of a price?</summary><p data-en="Items without a listed price are made to your specifications, so the price depends on the details. Add them to the cart and request a quote." data-es="Los productos sin precio se fabrican según tus especificaciones, por lo que el precio depende de los detalles. Agrégalos al carrito y pide una cotización.">Items without a listed price are made to your specifications, so the price depends on the details. Add them to the cart and request a quote.</p></details>
+      <details><summary data-en="What does the warranty cover?" data-es="¿Qué cubre la garantía?">What does the warranty cover?</summary><p data-en="The site lists a 10-year warranty, with 3 years on the powder coat. Ask for the full terms when you request your quote." data-es="El sitio indica garantía de 10 años, con 3 años en el recubrimiento en polvo. Pide los términos completos al solicitar tu cotización.">The site lists a 10-year warranty, with 3 years on the powder coat. Ask for the full terms when you request your quote.</p></details>
+      <details><summary data-en="Can I pay on this site?" data-es="¿Puedo pagar en este sitio?">Can I pay on this site?</summary><p data-en="Not in this concept demo. The cart only collects a quote request and no payment is taken." data-es="No en este demo conceptual. El carrito solo envía una solicitud de cotización y no se cobra nada.">Not in this concept demo. The cart only collects a quote request and no payment is taken.</p></details>
+  </section>
+
+  <section class="bloque contact" id="contact">
+    <h2 data-en="Contact us" data-es="Contáctanos">Contact us</h2>
+    <p data-en="Questions or a custom job? Send us a message and we will reply by email or phone." data-es="¿Preguntas o un trabajo a la medida? Envíanos un mensaje y te respondemos por correo o teléfono.">Questions or a custom job? Send us a message and we will reply by email or phone.</p>
+    <form id="contactForm" novalidate>
+      <label for="cName" data-en="Name" data-es="Nombre">Name</label>
+      <input id="cName" maxlength="120" autocomplete="name">
+      <label for="cContact" data-en="Email or phone" data-es="Correo o teléfono">Email or phone</label>
+      <input id="cContact" maxlength="160" autocomplete="email">
+      <label for="cDetails" data-en="Message (boat, engines, measurements)" data-es="Mensaje (bote, motores, medidas)">Message (boat, engines, measurements)</label>
+      <textarea id="cDetails" rows="4" maxlength="2000"></textarea>
+      <input id="cWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+      <button class="boton" id="cSubmit" type="submit" data-en="Send message" data-es="Enviar mensaje">Send message</button>
+      <div id="contactMsg" role="status"></div>
+    </form>
   </section>
 
   </main>
@@ -650,6 +698,27 @@
     });
     renderCatalog();
     renderCart();
+
+    // ---------- Contact form ----------
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var L = CT[idioma], msg = document.getElementById('contactMsg'), btn = document.getElementById('cSubmit');
+      var name = document.getElementById('cName').value.trim(), contact = document.getElementById('cContact').value.trim(),
+          details = document.getElementById('cDetails').value.trim();
+      msg.className = '';
+      if (!name || !contact || !details) { msg.className = 'err'; msg.textContent = L.qNeed; return; }
+      btn.disabled = true; btn.textContent = L.qSending;
+      fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, contact: contact, details: details,
+          website: document.getElementById('cWebsite').value, items: [], total: 0, lang: idioma }) })
+        .then(function (r) {
+          if (r.ok) { msg.textContent = L.qOk; document.getElementById('contactForm').reset(); }
+          else if (r.status === 501 || r.status === 404) { msg.textContent = L.qDemo; }
+          else { msg.className = 'err'; msg.textContent = L.qFail; }
+        })
+        .catch(function () { msg.className = 'err'; msg.textContent = L.qFail; })
+        .then(function () { btn.disabled = false; btn.textContent = btn.getAttribute('data-' + idioma); });
+    });
 
     // ---------- Photo lightbox ----------
     (function () {
